@@ -4,7 +4,7 @@
 * Gabriel Lima Barros - Full Stack
 * Gabriel Teixeira Carvalho - Full Stack
 * Lourenço Montenegro - Full Stack
-* Daniel - Full Stack
+* Daniel Braga Barbosa - Full Stack
 
 ## Objetivo
 O objetivo do sistema é criar um ambiente para salvar a avaliar seus filmes favoritos
