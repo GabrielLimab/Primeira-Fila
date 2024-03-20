@@ -16,6 +16,6 @@ O objetivo do sistema é criar um ambiente para salvar a avaliar seus filmes fav
 
 ## Tecnologias
 * JavaScript
-* Stencil JS
+* React
 * SQLite
 * NodeJs
