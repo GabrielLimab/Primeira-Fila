@@ -21,18 +21,18 @@ O objetivo do sistema é criar um ambiente para salvar a avaliar seus filmes fav
 * NodeJs
 
 # Backlog do Produto
-1- Como usuário, gostaria de poder criar uma conta.
-2- Como usuário, gostaria de poder fazer login na minha conta.
-3- Como usuário, gostaria de buscar um filme específico.
-4- Como usuário, gostaria de avaliar um filme.
-5- Como usuário, gostaria de escrever uma resenha sobre o filme.
-6- Como usuário, gostaria de ver avaliações e resenhas de outros usuários.
-7- Como usuário, gostaria de visualizar informações de um filme selecionado.
-8- Como usuário, gostaria de seguir outro usuário.
-9- Como usuário, gostaria de curtir resenhas de outros usuários.
-10- Como usuário, gostaria de ter uma página de perfil com as minhas avaliações e resenhas.
-11- Como usuário, gostaria de saber quais são os filmes mais bem avaliados.
-12- Como usuário, gostaria de ler as resenhas mais curtidas.
-13- Como usuário, gostaria de listar meus filmes favoritos.
-14- Como usuário, gostaria de visualizar a nota média de um filme.
-15- Como usuário, gostaria de marcar um filme como assistido.
+* Como usuário, gostaria de poder criar uma conta.
+* Como usuário, gostaria de poder fazer login na minha conta.
+* Como usuário, gostaria de buscar um filme específico.
+* Como usuário, gostaria de avaliar um filme.
+* Como usuário, gostaria de escrever uma resenha sobre o filme.
+* Como usuário, gostaria de ver avaliações e resenhas de outros usuários.
+* Como usuário, gostaria de visualizar informações de um filme selecionado.
+* Como usuário, gostaria de seguir outro usuário.
+* Como usuário, gostaria de curtir resenhas de outros usuários.
+* Como usuário, gostaria de ter uma página de perfil com as minhas avaliações e resenhas.
+* Como usuário, gostaria de saber quais são os filmes mais bem avaliados.
+* Como usuário, gostaria de ler as resenhas mais curtidas.
+* Como usuário, gostaria de listar meus filmes favoritos.
+* Como usuário, gostaria de visualizar a nota média de um filme.
+* Como usuário, gostaria de marcar um filme como assistido.
