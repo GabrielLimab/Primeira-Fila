@@ -79,3 +79,38 @@ História #5: Como usuário, gostaria de escrever uma resenha sobre o filme.
     - Implementar rotas no backend para salvar e ler resenhas [Gabriel Lima]
     - Implementar rotas no backend para editar e deletar resenhas [Lourenço]
     - Conectar componente de resenha com o backend [Daniel]
+
+História #6: Como usuário, gostaria de ver uma resenha de um usuário sobre um filme.
+- Tarefas e responsáveis:
+    - Desenvolver layout de exibição de resenhas no frontend [Gabriel Teixeira]
+    - Implementar funcionalidade para filtrar resenhas de filmes específicos no frontend [Gabriel Teixeira]
+    - Criar endpoint no backend para fornecer resenhas de um determinado filme [Gabriel Lima]
+    - Desenvolver consulta no banco de dados para selecionar resenhas por filme [Daniel]
+    - Conectar a exibição de resenhas no frontend ao backend para mostrar resenhas reais [Lourenço]
+
+História #7: Como usuário, gostaria de visualizar informações de um filme selecionado.
+- Tarefas e responsáveis:
+    - Implementar página de detalhes de filme no frontend [Daniel]
+    - Buscar e exibir informações detalhadas de filmes usando a API de filmes no frontend [Daniel]
+    - Criar componente para exibir avaliações dos usuários sobre o filme no frontend [Gabriel Lima]
+    - Implementar navegação do catálogo de filmes para a página de detalhes no frontend [Lourenço]
+
+História #8: Como usuário, gostaria de seguir outro usuário.
+- Tarefas e responsáveis:
+    - Implementar tabela de seguidores no banco de dados [Daniel]
+    - Desenvolver endpoints no backend para seguir usuários [Gabriel Lima]
+    - Criar botão de seguir no perfil do usuário no frontend [Lourenço]
+
+História #9: Como usuário, gostaria de curtir resenhas de outros usuários.
+- Tarefas e responsáveis:
+    - Criar sistema de curtidas para resenhas no banco de dados [Daniel]
+    - Implementar funcionalidade de curtir resenhas no backend [Gabriel Lima]
+    - Desenvolver botão de curtir no frontend [Lourenço]
+    - Exibir contagem de curtidas no frontend [Lourenço]
+    - Atualizar a visualização de resenhas para incluir curtidas [Gabriel Teixeira]
+
+História #10: Como usuário, gostaria de ver uma página de perfil com as avaliações e resenhas de um usuário (incluindo a minha).
+- Tarefas e responsáveis:
+    - Criar o design da página de perfil no frontend, exibindo avaliações e resenhas [Gabriel Lima]
+    - Desenvolver endpoints no backend para buscar avaliações e resenhas de um usuário específico [Gabriel Teixeira]
+    - Implementar componentes no frontend para listar as avaliações e resenhas [Daniel]
