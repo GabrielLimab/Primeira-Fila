@@ -1,9 +1,9 @@
-import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Login from './components/Login/Login'
 import Home from './components/Home/Home'
 import Profile from './components/Profile/Profile'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
+import SignUp from './components/SignUp/SignUp'
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
             <Route element={<h1>Not Found</h1>} path="*"/>
           </Route>
           <Route element={<Login/>} path="login"/>
+          <Route element={<SignUp/>} path="signup"/>
         </Routes>
       </Router>
     </div>
