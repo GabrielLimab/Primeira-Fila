@@ -20,21 +20,25 @@ O objetivo do sistema é criar um ambiente para salvar a avaliar seus filmes fav
 * SQLite
 * NodeJs
 
+## Link Figma
+[Figma Primeira Fila](https://www.figma.com/file/2Hxb0z4MB9lEV2eEqsBTiD/Primeira-Fila?type=design&node-id=0-1&mode=design)
+
 # Backlog do Produto
-* Como usuário, gostaria de poder criar uma conta.
-* Como usuário, gostaria de poder fazer login na minha conta.
-* Como usuário, gostaria de buscar um filme.
-* Como usuário, gostaria de avaliar um filme.
+* Como usuário, gostaria de poder criar uma conta.✅
+* Como usuário, gostaria de poder fazer login na minha conta.✅
+* Como usuário, gostaria de buscar um filme.✅
+* Como usuário, gostaria de avaliar um filme.✅
 * Como usuário, gostaria de escrever uma resenha sobre o filme.
 * Como usuário, gostaria de ver uma resenha de um usuário sobre um filme.
-* Como usuário, gostaria de visualizar informações de um filme selecionado.
+* Como usuário, gostaria de visualizar informações de um filme selecionado.✅
 * Como usuário, gostaria de seguir outro usuário.
 * Como usuário, gostaria de curtir resenhas de outros usuários.
-* Como usuário, gostaria de ver uma página de perfil com as avaliações e resenhas de um usuário (incluindo a minha).
-* Como usuário, gostaria de saber quais são os filmes mais bem avaliados.
+* Como usuário, gostaria de ver uma página de perfil com as avaliações de um usuário (incluindo a minha).✅
+* Como usuário, gostaria de ver as resenhas de um usuário.
+* Como usuário, gostaria de saber quais são os filmes mais bem avaliados. ✅
 * Como usuário, gostaria de ver as resenhas mais curtidas.
 * Como usuário, gostaria de listar meus filmes favoritos.
-* Como usuário, gostaria de visualizar a avaliação média de um filme.
+* Como usuário, gostaria de visualizar a avaliação média de um filme.✅
 * Como usuário, gostaria de marcar um filme como assistido.
 
 # Backlog da Sprint
@@ -72,10 +76,27 @@ História #4: Como usuário, gostaria de avaliar um filme.
     - Implementar rotas no backend para editar e deletar avaliações [Lourenço]
     - Conectar componente de avaliação com o backend [Lourenço]
 
-História #5: Como usuário, gostaria de escrever uma resenha sobre o filme.
+História #5: Como usuário, gostaria de visualizar informações de um filme selecionado.
 - Tarefas e responsáveis:
-    - Implementar visual do componente de resenha no frontend [Gabriel Teixeira]
-    - Implementar a lógica do componente de resenha no frontend [Gabriel Teixeira]
-    - Implementar rotas no backend para salvar e ler resenhas [Gabriel Lima]
-    - Implementar rotas no backend para editar e deletar resenhas [Lourenço]
-    - Conectar componente de resenha com o backend [Daniel]
+    - Implementar página de detalhes de filme no frontend [Daniel]
+    - Buscar e exibir informações detalhadas de filmes usando a API de filmes no frontend [Daniel]
+    - Criar componente para exibir avaliações dos usuários sobre o filme no frontend [Gabriel Lima]
+    - Implementar navegação do catálogo de filmes para a página de detalhes no frontend [Lourenço]
+
+História #6:  Como usuário, gostaria de ver uma página de perfil com as avaliações de um usuário (incluindo a minha).
+- Tarefas e responsáveis:
+    - Criar o design da página de perfil no frontend, exibindo avaliações [Gabriel Lima]
+    - Desenvolver endpoints no backend para buscar avaliações de um usuário específico [Gabriel Teixeira]
+    - Implementar componentes no frontend para listar as avaliações [Daniel]
+
+História #7: Como usuário, gostaria de marcar um filme como assistido.
+- Tarefas e responsáveis:
+    - Implementar botão de assistido [Lourenço]
+    - Implementar no BD a relação entre usuário e filme [Lourenço]
+    - Implementar no backend a lógica de um usuário marcar um filme como assistido [Gabriel Lima]
+    - Caso um usuário avalie um filme, ele deve ser marcado como assistido [Gabriel Lima]
+
+História #8: Como usuário, gostaria de saber quais são os filmes mais bem avaliados.
+- Tarefas e responsáveis:
+    - Implementar sessão de filmes mais bem avaliados na página principal [Gabriel Teixeira]
+    - Implementar a lógica para receber os filmes com maior nota média e adicionar à lista da sessão [Daniel]
