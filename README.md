@@ -20,6 +20,9 @@ O objetivo do sistema é criar um ambiente para salvar a avaliar seus filmes fav
 * SQLite
 * NodeJs
 
+## Link Figma
+[Figma Primeira Fila](https://www.figma.com/file/2Hxb0z4MB9lEV2eEqsBTiD/Primeira-Fila?type=design&node-id=0-1&mode=design)
+
 # Backlog do Produto
 * Como usuário, gostaria de poder criar uma conta.✅
 * Como usuário, gostaria de poder fazer login na minha conta.✅
