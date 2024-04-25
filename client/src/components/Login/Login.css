@@ -1,0 +1,93 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: linear-gradient(
+      to top right,
+      rgba(33, 33, 33, 0.8392),
+      rgba(66, 66, 66, 0.2392)
+    ),
+    url("../../assets/bg-img.png");
+  background-position: bottom;
+  overflow-y: clip;
+}
+
+.introduction {
+  width: 25%;
+  height: min-content;
+  margin-right: 8.5rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: baseline;
+}
+
+.slides p {
+  text-wrap: wrap;
+}
+
+.slider {
+  display: flex;
+}
+
+.dash {
+  font-size: 100px;
+  line-height: 0;
+}
+
+.logo-container img {
+  width: 5rem;
+  height: 5rem;
+  margin-right: 1rem;
+}
+
+.logo-container p {
+  font-size: 4rem;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  height: 100%;
+  margin-top: 18rem;
+  background-color: white;
+  border-radius: 32px 32px 0 0;
+}
+
+.welcome {
+  color: black;
+  font-size: 1rem;
+}
+
+.login-message {
+  color: black;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.socials {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-divider {
+  display: flex;
+  align-items: center;
+}
+
+.text-divider::before,
+.text-divider::after {
+  content: "";
+  height: 1px;
+  background-color: silver;
+  flex-grow: 1;
+  margin: 0 1rem;
+}
