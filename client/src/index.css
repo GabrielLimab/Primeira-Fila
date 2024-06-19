@@ -1,7 +1,12 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   font-family: "Zen Kaku Gothic Antique", sans-serif;
   font-style: normal;
   color: white;
 }
+/* 
+* {
+  border: 1px solid red;
+} */

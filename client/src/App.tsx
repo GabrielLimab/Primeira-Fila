@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./components/Login/Login";
+import Auth from "./components/Auth/Auth";
 import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import SignUp from "./components/SignUp/SignUp";
 import "./App.css";
 
 function App() {
@@ -16,8 +15,7 @@ function App() {
             <Route element={<Profile />} path="users/:teste" />
             <Route element={<h1>Not Found</h1>} path="*" />
           </Route>
-          <Route element={<Login />} path="login" />
-          <Route element={<SignUp />} path="signup" />
+          <Route element={<Auth />} path="login" />
         </Routes>
       </Router>
     </div>

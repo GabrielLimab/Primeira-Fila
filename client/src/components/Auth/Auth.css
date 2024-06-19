@@ -1,0 +1,94 @@
+.auth-page {
+  background-image: linear-gradient(
+      to top right,
+      rgba(33, 33, 33, 0.8392),
+      rgba(66, 66, 66, 0.2392)
+    ),
+    url("../../assets/bg-img.png");
+  background-size: cover;
+  background-position: bottom;
+
+  height: 100vh;
+}
+
+.content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 3em 1em;
+  padding: 0 1em;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.introduction {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3em;
+  width: min-content;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container img {
+  width: 5em;
+  height: 5em;
+  margin-right: 1em;
+}
+
+.logo-container .title {
+  text-wrap: nowrap;
+  font-size: 4em;
+  margin: 0;
+}
+
+.slides {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 100%;
+  text-wrap: wrap;
+}
+
+.slides p {
+  font-size: 3em;
+  margin: 0;
+}
+
+.auth-container {
+  padding: 3em;
+  border-radius: 32px 32px 0 0;
+  background-color: white;
+  align-self: flex-end;
+}
+
+@media screen and (max-width: 800px) {
+  .auth-page {
+    height: 100%;
+  }
+  .content {
+    flex-direction: column;
+    font-size: 0.8em;
+    transition: 0.5s;
+    padding: 1em 1em 0 1em;
+  }
+
+  .logo-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .slides p {
+    font-size: 2em;
+  }
+
+  .auth-container {
+    margin-top: 0;
+    align-self: auto;
+    height: 100%;
+  }
+}
