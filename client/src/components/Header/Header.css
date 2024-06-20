@@ -25,7 +25,7 @@ header {
 
 .pagesLinkContainer {
   display: flex;
-  justifycontent: space-between;
+  justify-content: space-between;
   gap: 20px;
 }
 

@@ -5,6 +5,7 @@ import Profile from "./components/Profile/Profile";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Header from "./components/Header/Header";
 import "./App.css";
+import Movie from "./components/Movie/Movie";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route element={<Home />} path="/" />
             <Route element={<Profile />} path="users/:teste" />
+            <Route element={<Movie />} path="movie" />
             <Route element={<h1>Not Found</h1>} path="*" />
           </Route>
           <Route element={<Auth />} path="login" />
