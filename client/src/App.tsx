@@ -3,12 +3,14 @@ import Auth from "./components/Auth/Auth";
 import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import Header from "./components/Header/Header";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <Router>
+        <Header/>
         <Routes>
           <Route element={<PrivateRoute />}>
             <Route element={<Home />} path="/" />
