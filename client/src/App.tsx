@@ -19,7 +19,7 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route element={<Home />} path="/" />
               <Route element={<Profile />} path="users/:teste" />
-              <Route element={<Movie />} path="movie" />
+              <Route element={<Movie/>} path="movie" />
               <Route element={<h1>Not Found</h1>} path="*" />
             </Route>
             <Route element={<Auth />} path="login" />

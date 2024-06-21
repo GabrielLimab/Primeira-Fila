@@ -42,20 +42,51 @@ h1 {
         }
     }
 
-    .buttons-container {
-        display: flex ;
-        gap : 10px;
+    .right-side {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
 
-        button {
+        .buttons-container {
+            display: flex ;
+            gap : 10px;
+    
+            button {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                height: 40px;
+                border: none;
+                border-radius: 10px;
+                padding: 8px 18px;
+                background-color: #A3A3A30D;
+                color: white;
+            }
+    
+            button:hover {
+                background-color: #A3A3A326;
+                cursor: pointer;
+            }
+        }
+    
+        .rating-buttons {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            height: 40px;
-            border: none;
-            border-radius: 10px;
-            padding: 8px 18px;
-            background-color: #A3A3A30D;
-            color: white;
+            flex-direction: row;
+            gap: 4px;
+    
+            button {
+                border: none;
+                border-radius: 45px;
+                padding: 4px 8px;
+                background-color: #A3A3A30D;
+                color: white;
+            }
+
+            button:hover {
+                background-color: #A3A3A326;
+                cursor: pointer;
+            }
         }
     }
 }
@@ -94,6 +125,10 @@ h1 {
         flex-direction: row;
         align-items: center;
         gap: 10px;
+
+        text {
+            color: #D8C882;
+        }
     }
 
     .ellipse {
@@ -117,6 +152,11 @@ h1 {
                 background-color: #A3A3A326;
                 color: white;
             }
+
+            button:hover {
+                background-color: #A3A3A30D;
+                cursor: pointer;
+            }
         }
     }
 
@@ -125,12 +165,24 @@ h1 {
         flex-direction: row;
         align-items: center;
         word-break: break-word;
+
+        .plot-text {
+            text {
+                color: #C3C3C3;
+            }
+        }
     }
 
     .director {
         display: flex;
         flex-direction: row;
         align-items: center;
+
+        .director-text {
+            text {
+                color: #D8C882;
+            }
+        }
     }
 
     .writers {

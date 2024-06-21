@@ -1,13 +1,29 @@
-import { Link, useParams } from "react-router-dom";
 import dunaBanner from "../../assets/duna-banner.png";
 import dunaTrailer from "../../assets/duna-trailer.png";
 import checkBox from "../../assets/check-box.svg";
+import checkedBox from "../../assets/checked-box.svg";
 import star from "../../assets/star.svg";
 import rateStar from "../../assets/rate-star.svg";
+import yellowStar from "../../assets/yellow-star.svg";
 import "./Movie.css";
+import { useState } from "react";
 
-const Movie = () => {
-    const { teste } = useParams();
+function Movie() {
+    const [watched, setWatched] = useState(false);
+    const [rate, setRate] = useState(-1);
+    const [showRatingButtons, setShowRatingButtons] = useState(false);
+
+    function renderRatingButtons() {
+        const ratings = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+        return ratings.map((rating, index) => {
+            return (
+                <button key={index} className="rating-button" onClick={() => handleRatingClick(rating)}>
+                    {rating}
+                </button>
+            );
+        });
+    }
 
     function renderGenreButtons() {
         const genres = ["Action", "Adventure", "Drama"];
@@ -36,7 +52,7 @@ const Movie = () => {
 
         return (
             <div className="director-text">
-                {director}
+                <text>{director}</text>
             </div>
         );
     }
@@ -45,11 +61,24 @@ const Movie = () => {
         return names.map((name, index) => {
             return (
                 <>
-                    {name}    
+                    <text>{name}</text>   
                     {(index < names.length - 1) && <div className="ellipse"></div>}
                 </>
             );
         });
+    }
+
+    function handleWatchedClick() {
+        setWatched(!watched);
+    }
+
+    function handleRateClick() {
+        setShowRatingButtons(!showRatingButtons);
+    }
+
+    function handleRatingClick(rating: number) {
+        setRate(rating);
+        setShowRatingButtons(!showRatingButtons);
     }
 
     return (
@@ -64,19 +93,25 @@ const Movie = () => {
                         <div className="ellipse"></div>
                         <text>2h 46min</text>
                     </div>
-                    <div className='buttons-container'>
-                        <button className="watched">
-                            <img src={checkBox}></img>
-                            <text>Watched</text>
-                        </button>
-                        <button className="rate">
-                            <img src={star}></img>
-                            <text>Rate</text>
-                        </button>
-                        <button className="rating">
-                            <img src={rateStar}></img>
-                            <text>8.9/10 (200k)</text>
-                        </button>
+                    <div className="right-side">
+                        <div className='buttons-container'>
+                            <button className="watched" onClick={() => handleWatchedClick()}>
+                                <img src={watched ? checkedBox : checkBox}></img>
+                                <text>Watched</text>
+                            </button>
+                            <button className="rate" onClick={() => handleRateClick()}>
+                                <img src={rate === -1 ? star : yellowStar}></img>
+                                <text>{rate === -1 ? 'Rate' : rate}</text>
+                            </button>
+                            <button className="rating">
+                                <img src={rateStar}></img>
+                                <text>8.9/10 (200k)</text>
+                            </button>
+                        </div>
+                        {showRatingButtons && 
+                        <div className='rating-buttons'>
+                            {renderRatingButtons()}
+                        </div>}
                     </div>
                 </div>
                 <div className="movie-images">
