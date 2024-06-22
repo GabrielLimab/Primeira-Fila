@@ -1,6 +1,7 @@
-import TextInput from "../Atoms/TextInput/TextInput";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { login } from "../../services/authenticate";
+import TextInput from "../Atoms/TextInput/TextInput";
 import Button from "../Atoms/Button/Button";
 import Socials from "../Atoms/Socials/Socials";
 import "./Login.css";
@@ -9,14 +10,30 @@ interface LoginProps {
   setAuthMode: React.Dispatch<React.SetStateAction<string>>;
 }
 function Login({ setAuthMode }: LoginProps) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(e);
-  };
+    setError("");
+
+    if (email === "" || password === "") {
+      setError("Fill in all inputs");
+      return;
+    }
+
+    await login(email, password)
+      .catch((err) => {
+        setError(err);
+        console.log(error);
+        throw err;
+      })
+      .then(() => {
+        navigate("/home");
+      });
+  }
 
   return (
     <div className="login-container">

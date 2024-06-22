@@ -1,24 +1,49 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TextInput from "../Atoms/TextInput/TextInput";
 import Button from "../Atoms/Button/Button";
 import Socials from "../Atoms/Socials/Socials";
 import "./SignUp.css";
+import { login, signup } from "../../services/authenticate";
 
 interface SignUpProps {
   setAuthMode: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function SignUp({ setAuthMode }: SignUpProps) {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSignUp(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(e);
-  };
+    setError("");
 
+    if (name === "" || email === "" || password === "") {
+      setError("Preencha todos os campos");
+      return;
+    }
+
+    await signup(name, email, password)
+      .catch((err) => {
+        setError(err);
+        console.log(error);
+        throw err;
+      })
+      .then(() => {
+        login(email, password)
+          .catch((err) => {
+            setError(err);
+            console.log(error);
+            throw err;
+          })
+          .then(() => {
+            navigate("/home");
+          });
+      });
+  }
   return (
     <div className="signup-container">
       <p className="welcome">INSCREVA-SE!</p>

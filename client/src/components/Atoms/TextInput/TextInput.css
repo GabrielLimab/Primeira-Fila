@@ -6,8 +6,14 @@
   border: 1px solid transparent;
   outline: none;
   width: 100%;
+  background-color: white;
   box-sizing: border-box;
   border-radius: 1em;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 0s 600000s, color 0s 600000s !important;
 }
 
 .text-input-container .legend {
