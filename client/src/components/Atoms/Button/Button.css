@@ -1,4 +1,4 @@
-.button-container button {
+.button-container {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -15,14 +15,14 @@
   min-width: 20em;
 }
 
-.button-container button img {
+.button-container img {
   position: absolute;
   left: 20px;
   width: 1.25em;
   height: 1.25em;
 }
 
-.button-container button:hover {
+.button-container:hover {
   background-color: #f4f2f2;
 }
 
