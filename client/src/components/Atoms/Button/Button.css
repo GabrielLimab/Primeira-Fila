@@ -26,12 +26,12 @@
   background-color: #f4f2f2;
 }
 
-.button-container .dark {
+.button-container.dark {
   background-color: #212121;
   color: #ffffff;
 }
 
-.button-container .dark:hover {
+.button-container.dark:hover {
   background-color: #f4f2f2;
   color: #616161;
   transition: 0.15s;

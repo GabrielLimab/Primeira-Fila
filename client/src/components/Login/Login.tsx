@@ -66,7 +66,7 @@ function Login({ setAuthMode }: LoginProps) {
         <Button text="CONTINUAR" darkMode></Button>
       </form>
       <div className="text-divider">
-        <strong>Ou</strong>
+        <strong>OU</strong>
       </div>
       <Socials></Socials>
       <p className="go-to-signup">
