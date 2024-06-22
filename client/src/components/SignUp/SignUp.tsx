@@ -1,6 +1,6 @@
-import TextInput from "../Atoms/TextInput/TextInput";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import TextInput from "../Atoms/TextInput/TextInput";
 import Button from "../Atoms/Button/Button";
 import Socials from "../Atoms/Socials/Socials";
 import "./SignUp.css";
@@ -8,8 +8,8 @@ import "./SignUp.css";
 interface SignUpProps {
   setAuthMode: React.Dispatch<React.SetStateAction<string>>;
 }
+
 function SignUp({ setAuthMode }: SignUpProps) {
-  // const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,9 +21,16 @@ function SignUp({ setAuthMode }: SignUpProps) {
 
   return (
     <div className="signup-container">
-      <p className="welcome">SEJA BEM VINDO!</p>
-      <p className="signup-message">Entre em sua conta</p>
+      <p className="welcome">INSCREVA-SE!</p>
+      <p className="signup-message">Crie sua conta</p>
       <form className="signup-form" onSubmit={handleSignUp}>
+        <TextInput
+          placeholder="Seu Nome"
+          value={name}
+          type="name"
+          setValue={setName}
+          name="name"
+        />
         <TextInput
           placeholder="Email"
           value={email}
@@ -38,31 +45,27 @@ function SignUp({ setAuthMode }: SignUpProps) {
           setValue={setPassword}
           name="password"
         />
-        <div className="signup-controls">
-          <div className="remember">
-            <input type="checkbox" id="remember" name="remember" />
-            <label htmlFor="remember">Lembre de mim</label>
-          </div>
-          <a href="/">Esqueci minha senha</a>
+        <div className="submit-button">
+          <Button text="INSCREVER-SE" darkMode></Button>
         </div>
-        <Button text="CONTINUAR" darkMode></Button>
       </form>
       <div className="text-divider">
-        <strong>Or</strong>
+        <strong>Ou</strong>
       </div>
       <Socials></Socials>
-      <p className="new-user">
-        Novo Usuário?{" "}
+      <p className="go-to-login">
+        Já possui uma conta?{" "}
         <Link
           to="#"
           onClick={() => {
-            setAuthMode("signup");
+            setAuthMode("login");
           }}
         >
-          <strong>INSCREVA-SE AQUI</strong>
+          <strong>ENTRE AQUI</strong>
         </Link>
       </p>
     </div>
   );
 }
+
 export default SignUp;

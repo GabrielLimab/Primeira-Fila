@@ -50,7 +50,7 @@ function Login({ setAuthMode }: LoginProps) {
         <strong>Ou</strong>
       </div>
       <Socials></Socials>
-      <p className="new-user">
+      <p className="go-to-signup">
         Novo Usuário?{" "}
         <Link
           to="#"

@@ -12,6 +12,7 @@ button {
   padding: 0.75em 1em;
   background-color: white;
   position: relative;
+  min-width: 20em;
 }
 
 button img {
@@ -22,7 +23,7 @@ button img {
 }
 
 button:hover {
-  background-color: #fcfcfc;
+  background-color: #f4f2f2;
 }
 
 .dark {
@@ -31,7 +32,7 @@ button:hover {
 }
 
 .dark:hover {
-  background-color: #fcfcfc;
+  background-color: #f4f2f2;
   color: #616161;
   transition: 0.15s;
 }

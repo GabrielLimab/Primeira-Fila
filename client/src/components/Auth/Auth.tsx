@@ -1,7 +1,7 @@
+import { useState } from "react";
 import logo from "../../assets/logo.png";
 import Login from "../Login/Login";
-
-import { useState } from "react";
+import SignUp from "../SignUp/SignUp";
 import "./Auth.css";
 
 function Auth() {
@@ -27,7 +27,7 @@ function Auth() {
           {authMode === "login" ? (
             <Login setAuthMode={setAuthMode} />
           ) : (
-            <h1>Sign Up</h1>
+            <SignUp setAuthMode={setAuthMode}></SignUp>
           )}
         </div>
       </div>

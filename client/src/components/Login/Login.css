@@ -1,7 +1,7 @@
 .login-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5em 0;
+  gap: 1em 0;
 }
 
 .welcome {
@@ -49,12 +49,6 @@
   accent-color: #212121;
 }
 
-.socials {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em 0;
-}
-
 .text-divider {
   display: flex;
   align-items: center;
@@ -70,13 +64,13 @@
   margin: 0 1em;
 }
 
-.new-user {
+.go-to-signup {
   color: #212121;
   margin-left: auto;
   margin-right: auto;
 }
 
-.new-user a {
+.go-to-signup a {
   color: #212121;
   text-decoration: none;
 }
