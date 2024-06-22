@@ -1,7 +1,7 @@
 .login-container {
   display: flex;
   flex-direction: column;
-  gap: 1em 0;
+  gap: 0.5em 0;
 }
 
 .welcome {
@@ -20,12 +20,13 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 0.25em 0;
+  gap: 0.875em 0;
 }
 
 .login-controls {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   color: #424242;
   gap: 0 2em;
 }
