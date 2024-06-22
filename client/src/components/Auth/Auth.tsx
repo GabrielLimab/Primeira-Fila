@@ -1,5 +1,6 @@
 import logo from "../../assets/logo.png";
 import Login from "../Login/Login";
+
 import { useState } from "react";
 import "./Auth.css";
 
@@ -15,10 +16,10 @@ function Auth() {
             <p className="title">Primeira Fila</p>
           </div>
           <div className="slides">
-            <p>Front row movie rate</p>
+            <p>Avalie seus filmes favoritos</p>
             <span>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Veja o que todos estão assistindo no momento, salve seus filmes
+              preferidos e compartilhe sua opinião com o mundo.
             </span>
           </div>
         </div>

@@ -1,0 +1,37 @@
+button {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #616161;
+  font-family: "Zen Kaku Gothic Antique", sans-serif;
+  font-size: 1em;
+  width: 100%;
+  border: 1px solid #eeeeee;
+  border-radius: 0.75em;
+  padding: 0.75em 1em;
+  background-color: white;
+  position: relative;
+}
+
+button img {
+  position: absolute;
+  left: 20px;
+  width: 1.25em;
+  height: 1.25em;
+}
+
+button:hover {
+  background-color: #fcfcfc;
+}
+
+.dark {
+  background-color: #212121;
+  color: #ffffff;
+}
+
+.dark:hover {
+  background-color: #fcfcfc;
+  color: #616161;
+  transition: 0.15s;
+}

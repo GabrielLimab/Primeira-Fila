@@ -3,26 +3,27 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../Atoms/Button/Button";
 import Socials from "../Atoms/Socials/Socials";
-import "./Login.css";
+import "./SignUp.css";
 
-interface LoginProps {
+interface SignUpProps {
   setAuthMode: React.Dispatch<React.SetStateAction<string>>;
 }
-function Login({ setAuthMode }: LoginProps) {
+function SignUp({ setAuthMode }: SignUpProps) {
   // const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(e);
   };
 
   return (
-    <div className="login-container">
+    <div className="signup-container">
       <p className="welcome">SEJA BEM VINDO!</p>
-      <p className="login-message">Entre em sua conta</p>
-      <form className="login-form" onSubmit={handleLogin}>
+      <p className="signup-message">Entre em sua conta</p>
+      <form className="signup-form" onSubmit={handleSignUp}>
         <TextInput
           placeholder="Email"
           value={email}
@@ -37,7 +38,7 @@ function Login({ setAuthMode }: LoginProps) {
           setValue={setPassword}
           name="password"
         />
-        <div className="login-controls">
+        <div className="signup-controls">
           <div className="remember">
             <input type="checkbox" id="remember" name="remember" />
             <label htmlFor="remember">Lembre de mim</label>
@@ -47,7 +48,7 @@ function Login({ setAuthMode }: LoginProps) {
         <Button text="CONTINUAR" darkMode></Button>
       </form>
       <div className="text-divider">
-        <strong>Ou</strong>
+        <strong>Or</strong>
       </div>
       <Socials></Socials>
       <p className="new-user">
@@ -64,4 +65,4 @@ function Login({ setAuthMode }: LoginProps) {
     </div>
   );
 }
-export default Login;
+export default SignUp;
