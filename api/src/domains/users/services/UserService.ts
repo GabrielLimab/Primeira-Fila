@@ -8,7 +8,6 @@ class UserServiceClass {
     id: true,
     name: true,
     email: true,
-    username: true,
     created_at: true,
   };
 
@@ -28,23 +27,12 @@ class UserServiceClass {
     if (userEmail) {
       throw new QueryError('Email already in use');
     }
-
-    const userUsername = await prisma.user.findFirst({
-      where: {
-        username: body.username,
-      },
-    });
     
-    if (userUsername) {
-      throw new QueryError('Username already in use');
-    }
-
     const encryptedPassword = await this.encryptPassword(body.password);
 
     const newUser = await prisma.user.create({
       data: {
         name: body.name,
-        username: body.username,
         email: body.email,
         password: encryptedPassword,
       },
@@ -80,21 +68,6 @@ class UserServiceClass {
     return user;
   }
 
-  async getByUsername(username: string) {
-    const user = await prisma.user.findFirst({
-      where: {
-        username,
-      },
-      select: this.selectOptions,
-    });
-
-    if (!user) {
-      throw new QueryError('User not found');
-    }
-
-    return user;
-  }
-
   async edit(id: string, body: Partial<Omit<User, 'id'>>){
     const user = await prisma.user.findFirst({
       where: {
@@ -118,18 +91,6 @@ class UserServiceClass {
       
       if (userEmail) {
         throw new QueryError('Email already in use');
-      }
-    }
-
-    if (body.username) {
-      const userUsername = await prisma.user.findFirst({
-        where: {
-          username: body.username,
-        },
-      });
-
-      if (userUsername) {
-        throw new QueryError('Username already in use');
       }
     }
     
