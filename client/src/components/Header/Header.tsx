@@ -3,6 +3,7 @@ import search from "../../assets/search-icon.png";
 import user from "../../assets/user.png";
 import vector from "../../assets/vector.png";
 import GlobalStyle from "../Styles/Font";
+import { useNavigate } from "react-router-dom";
 import {
   CategorySelect,
   HeaderContainer,
@@ -21,6 +22,11 @@ import {
 
 
 const Header = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/auth");
+  };
   return (
     <HeaderContainer>
       <GlobalStyle />
@@ -53,6 +59,7 @@ const Header = () => {
           <StyledLink to="/usuario" className="ok">
             <UserIcon src={user} alt="user" />
             <RightButtonsText>Usuário</RightButtonsText>
+            <button onClick={handleLogout}>Logout</button>
           </StyledLink>
         </RightButtons>
       </HeaderContent>
