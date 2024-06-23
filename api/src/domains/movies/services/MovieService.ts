@@ -1,26 +1,15 @@
-import { AxiosError } from "axios";
-import api from "./api";
 import { MovieRepository } from "../repositories/MovieRepository";
 
 class MovieServiceClass {
   async getForYouMovies(userId: string) {
-    const topUserReview = MovieRepository.getTopUserReview(userId);
+    const topUserReview = await MovieRepository.getTopUserReview(userId);
     
     if (!topUserReview) {
       const topRatedMovies = await this.getTopRatedMovies();
       return topRatedMovies;
     }
   
-    const forYouMovies = await api.get(`/movie/${topUserReview}/recommendations`).then(
-      (response) => {
-        return response.data;
-      }
-    ).catch(
-      (error: AxiosError) => {
-        if (error.response) {
-          throw error.response.data;
-        }
-    });
+    const forYouMovies = await MovieRepository.getForYouMovies(topUserReview);
 
     const forYouMoviesCards = forYouMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
       // const movieRating = MovieReviewService.getMovieRating(movie.id);
@@ -37,16 +26,7 @@ class MovieServiceClass {
   }
 
   async getTopRatedMovies() {
-    const topRatedMovies = await api.get('/movie/top_rated?language=pt-BR').then(
-      (response) => {
-        return response.data.results;
-      }
-    ).catch(
-      (error: AxiosError) => {
-        if (error.response) {
-          throw error.response.data;
-        }
-    });
+    const topRatedMovies = await MovieRepository.getTopRatedMovies();
 
     const topRatedMoviesCards = topRatedMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
       // const movieRating = MovieReviewService.getMovieRating(movie.id);
@@ -63,16 +43,7 @@ class MovieServiceClass {
   }
 
   async getNowPlayingMovies() {
-    const nowPlayingMovies = await api.get('/movie/now_playing?language=pt-BR').then(
-      (response) => {
-        return response.data.results;
-      }
-    ).catch(
-      (error: AxiosError) => {
-        if (error.response) {
-          throw error.response.data;
-        }
-    });
+    const nowPlayingMovies = await MovieRepository.getNowPlayingMovies();
 
     const nowPlayingMoviesCards = nowPlayingMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
       // const movieRating = MovieReviewService.getMovieRating(movie.id);
@@ -88,39 +59,10 @@ class MovieServiceClass {
     return nowPlayingMoviesCards;
   }
 
-  async getMovieDetails(id: string) {
-    const movieDetails = await api.get(`/movie/${id}`).then(
-      (response) => {
-        return response.data;
-      }
-    ).catch(
-      (error: AxiosError) => {
-        if (error.response) {
-          throw error.response.data;
-        }
-    });
-
-    const movieCredits = await api.get(`/movie/${id}/credits`).then(
-      (response) => {
-        return response.data;
-      }
-    ).catch(
-      (error: AxiosError) => {
-        if (error.response) {
-          throw error.response.data;
-        }
-    });
-
-    const movieProviders = await api.get(`/movie/${id}/watch/providers`).then(
-      (response) => {
-        return response.data;
-      }
-    ).catch(
-      (error: AxiosError) => {
-        if (error.response) {
-          throw error.response.data;
-        }
-    });
+  async getMovieDetails(movieId: string) {
+    const movieDetails = await MovieRepository.getMovieDetails(movieId);
+    const movieCredits = await MovieRepository.getMovieCredits(movieId);
+    const movieProviders = await MovieRepository.getMovieProviders(movieId);
 
     const actors = movieCredits.cast.filter((actor: { known_for_department: string }) => actor.known_for_department === "Acting");
     const stars = actors.slice(0, 5);
@@ -150,7 +92,6 @@ class MovieServiceClass {
 
     return movieInfo;
   }
-
 }
 
 export const MovieService = new MovieServiceClass();
