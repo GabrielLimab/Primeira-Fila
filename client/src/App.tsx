@@ -5,7 +5,6 @@ import Home from "./components/Home/Home";
 import Layout from "./components/Layout/Layout";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Profile from "./components/Profile/Profile";
-import "./App.css";
 import Movie from "./components/Movie/Movie";
 
 function App() {

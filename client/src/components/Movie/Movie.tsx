@@ -61,8 +61,8 @@ function Movie() {
         return names.map((name, index) => {
             return (
                 <>
-                    <text>{name}</text>   
-                    {(index < names.length - 1) && <div className="ellipse"></div>}
+                    <text key={index}>{name}</text>   
+                    {(index < names.length - 1) && <div key={index + names.length} className="ellipse"></div>}
                 </>
             );
         });
