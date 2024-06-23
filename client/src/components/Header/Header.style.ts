@@ -26,13 +26,6 @@ export const LeftHeader = styled.div`
 `;
 
 export const StyledLink = styled(Link)`
-.pagesLinkContainer {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.pageLink {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   color: #c3c3c3;
