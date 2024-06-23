@@ -1,4 +1,6 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import Card from "../Atoms/Card/Card";
+import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -7,17 +9,29 @@ const Home = () => {
     navigate("/auth");
   };
 
+  const cards = [
+    [],
+    [],
+    []
+  ]
+
   return (
     <div className="mainContainer">
       <div className={"titleContainer"}>
         <div>Welcome!</div>
       </div>
-      <div>This is the home page.</div>
+      <div>
+        <div>
+          This is the home page.
+          <Card
+            title="Duna"
+            image="../assets/starwars.png"
+            link=""
+            rate={8}
+          ></Card>
+        </div>
+      </div>
       <button onClick={handleLogout}>Logout</button>
-      <Link to="/users/gabriel">
-        <button>Profile</button>
-      </Link>
-
       <Outlet />
     </div>
   );
