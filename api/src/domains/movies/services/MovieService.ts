@@ -1,56 +1,71 @@
 import { AxiosError } from "axios";
 import api from "./api";
 import prisma from "../../../../libs/prisma";
+import { MovieRepository } from "../repositories/MovieRepository";
 
 class MovieServiceClass {
-  async getTrendingMovies() {
-    const trendingMovies = await api.get('/trending/movie/week').then(
-      (response) => {
-        return response.data;
+  async getForYouMovies(userId: string) {
+    const topUserReview = await MovieRepository.getTopUserReview(userId);
+    
+    if (!topUserReview) {
+      const topRatedMovies = await this.getTopRatedMovies();
+      return topRatedMovies;
+    }
+  
+    const forYouMovies = await MovieRepository.getForYouMovies(topUserReview);
+
+    const forYouMoviesCards = forYouMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
+      // const movieRating = MovieReviewService.getMovieRating(movie.id);
+
+      return {
+        "id": movie.id,
+        "title": movie.title,
+        "poster_path": movie.poster_path,
+        "rating": movie.vote_average
       }
-    ).catch(
-      (error: AxiosError) => {
-        if (error.response) {
-          throw error.response.data;
-        }
     });
 
-    return trendingMovies;
+    return forYouMoviesCards;
   }
 
-  async getMovieDetails(id: string) {
-    const movieDetails = await api.get(`/movie/${id}`).then(
-      (response) => {
-        return response.data;
+  async getTopRatedMovies() {
+    const topRatedMovies = await MovieRepository.getTopRatedMovies();
+
+    const topRatedMoviesCards = topRatedMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
+      // const movieRating = MovieReviewService.getMovieRating(movie.id);
+
+      return {
+        "id": movie.id,
+        "title": movie.title,
+        "poster_path": movie.poster_path,
+        "rating": movie.vote_average
       }
-    ).catch(
-      (error: AxiosError) => {
-        if (error.response) {
-          throw error.response.data;
-        }
     });
 
-    const movieCredits = await api.get(`/movie/${id}/credits`).then(
-      (response) => {
-        return response.data;
+    return topRatedMoviesCards;
+  }
+
+  async getNowPlayingMovies() {
+    const nowPlayingMovies = await MovieRepository.getNowPlayingMovies();
+
+    const nowPlayingMoviesCards = nowPlayingMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
+      // const movieRating = MovieReviewService.getMovieRating(movie.id);
+      
+      return {
+        "id": movie.id,
+        "title": movie.title,
+        "poster_path": movie.poster_path,
+        "rating": movie.vote_average
       }
-    ).catch(
-      (error: AxiosError) => {
-        if (error.response) {
-          throw error.response.data;
-        }
     });
 
-    const movieProviders = await api.get(`/movie/${id}/watch/providers`).then(
-      (response) => {
-        return response.data;
-      }
-    ).catch(
-      (error: AxiosError) => {
-        if (error.response) {
-          throw error.response.data;
-        }
-    });
+    return nowPlayingMoviesCards;
+  }
+
+  async getMovieDetails(movieId: string) {
+    const movieDetails = await MovieRepository.getMovieDetails(movieId);
+    const movieCredits = await MovieRepository.getMovieCredits(movieId);
+    const movieProviders = await MovieRepository.getMovieProviders(movieId);
 
     const actors = movieCredits.cast.filter((actor: { known_for_department: string }) => actor.known_for_department === "Acting");
     const stars = actors.slice(0, 5);

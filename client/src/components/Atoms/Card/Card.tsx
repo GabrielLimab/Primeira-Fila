@@ -1,33 +1,41 @@
 import emptyStar from "../../../assets/emptyStar.svg";
 import filledStar from "../../../assets/filledStar.svg";
+import play from "../../../assets/play.svg";
 import info from "../../../assets/info.svg";
-import Button from "../Button/Button";
+import bookmark from "../../../assets/bookmark.svg";
 import "./Card.css";
 
 interface CardProps {
   title: string;
-  image: string;
-  link: string;
+  poster_path: string;
   rate: number;
 }
 
-function Card({ title, image, link, rate }: CardProps) {
+function Card({ title, poster_path, rate }: CardProps) {
   return (
     <div className="card">
-      <img src={image} alt="card" />
-      <div className="movie-title">{title}</div>
-      <div className="rate-info">
-        <div className="avg-rate">
-          {filledStar && <img src={filledStar} />}
-          {rate}
-        </div>
-        <div className="user-rate">
-          {emptyStar && <img src={emptyStar} />}
-          Rate
-        </div>
-        <div className="info">{info && <img src={info} />}</div>
+      <div className="imageContainer">
+        <img src={poster_path} alt="card" className="movie-image" />
+        {bookmark && <img src={bookmark} className="bookmark" />}
       </div>
-      <a href={link}>Resenhas</a>
+      <div className="movie-details">
+        <div className="movie-title">{title}</div>
+        <div className="movie-rating">
+          <div className="avg-rating">
+            {filledStar && <img src={filledStar} className="star-icon" />}
+            {rate}
+          </div>
+          <div className="user-rate">
+            {emptyStar && <img src={emptyStar} className="star-icon" />}
+            Rate
+          </div>
+          <div className="infoIcon">{info && <img src={info} />}</div>
+        </div>
+        <button className="card-reviews-button">
+          {play && <img src={play} className="play-icon" />}
+          Resenhas
+        </button>
+      </div>
     </div>
   );
 }

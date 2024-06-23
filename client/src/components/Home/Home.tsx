@@ -1,37 +1,18 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import Card from "../Atoms/Card/Card";
+import { Outlet } from "react-router-dom";
+import CardSection from "../CardSection/CardSection";
 import "./Home.css";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/auth");
-  };
-
-  const cards = [
-    [],
-    [],
-    []
-  ]
-
   return (
     <div className="mainContainer">
-      <div className={"titleContainer"}>
-        <div>Welcome!</div>
+      <div className="background"></div>
+        <div className="foreground">
+          <CardSection
+            title={"Principais escolhas pra você"}
+            subtitle={"Séries e filmes que você vai gostar"}
+            type={"for-you"}
+          />
       </div>
-      <div>
-        <div>
-          This is the home page.
-          <Card
-            title="Duna"
-            image="../assets/starwars.png"
-            link=""
-            rate={8}
-          ></Card>
-        </div>
-      </div>
-      <button onClick={handleLogout}>Logout</button>
       <Outlet />
     </div>
   );

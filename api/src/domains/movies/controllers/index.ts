@@ -6,11 +6,35 @@ import { loginMiddleware,
 import { statusCodes } from '../../../../utils/constants/status-codes';
 export const router = Router();
 
-router.get('/trending', 
+router.get('/for-you', 
   verifyJWT, 
   async(req: Request, res: Response, next:NextFunction) => {  
     try {
-      const movies = await MovieService.getTrendingMovies();
+      const movies = await MovieService.getForYouMovies(req.userId!);
+      res.status(statusCodes.SUCCESS).json(movies);
+    } catch (error) { 
+      next(error);
+    }
+  },
+);
+
+router.get('/top-rated', 
+  verifyJWT, 
+  async(req: Request, res: Response, next:NextFunction) => {  
+    try {
+      const movies = await MovieService.getTopRatedMovies();
+      res.status(statusCodes.SUCCESS).json(movies);
+    } catch (error) { 
+      next(error);
+    }
+  },
+);
+
+router.get('/now-playing', 
+  verifyJWT, 
+  async(req: Request, res: Response, next:NextFunction) => {  
+    try {
+      const movies = await MovieService.getNowPlayingMovies();
       res.status(statusCodes.SUCCESS).json(movies);
     } catch (error) { 
       next(error);

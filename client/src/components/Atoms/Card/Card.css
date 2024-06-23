@@ -1,20 +1,102 @@
 .card {
-  background-color: #a3a3a35b;
-  color: #c3c3c3;
+  width: 12.5em;
+  border-radius: 0.625em;
+  overflow: hidden;
+  background-color: #a3a3a315;
+  color: #C3C3C3;
   display: flex;
   flex-direction: column;
+  padding: 0.7em;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.015);
+}
+
+.imageContainer {
+  position: relative;
+}
+
+.bookmark {
+  position: absolute;
+  top: 0em;
+  left: 0.625em;
+  display: flex;
   align-items: center;
-  width: 10em;
-  height: 15em;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.movie-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.movie-details {
+  padding-top: 0.5em;
 }
 
 .movie-title {
-  font-family: "Roboto";
+  font-size: 1.13em;
+  margin: 0.5em 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.rate-info {
+.movie-rating {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.5em;
 }
 
-.avg-rate {
+.avg-rating {
+  display: flex;
+  align-items: flex-start;
+  margin-right: 0.5em;
+}
+
+.star-icon {
+  margin-right: 0.5em;
+}
+
+.user-rate {
+  display: flex;
+  align-items: flex-start;
+  margin-right: 0.5em;
+}
+
+.infoIcon {
+  display: flex;
+  align-items: flex-start;
+}
+
+.card-reviews-button {
+  width: 100%;
+  padding: 0.5em 0;
+  margin-top: 0.5em;
+  border: none;
+  border-radius: 0.5em;
+  background-color: #a3a3a315;
+  color: #C3C3C3;
+  font-size: 0.875em;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: 0px 1px 2px 0px #FFFFFF14 inset;
+}
+
+.play-icon {
+  margin-right: 0.5em;
+  margin-left: 1em;
+}
+
+.card-reviews-button:hover {
+  background-color: #a3a3a315;
 }
