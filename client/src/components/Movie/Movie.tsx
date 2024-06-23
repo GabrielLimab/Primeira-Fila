@@ -5,6 +5,7 @@ import checkedBox from "../../assets/checked-box.svg";
 import star from "../../assets/star.svg";
 import rateStar from "../../assets/rate-star.svg";
 import yellowStar from "../../assets/yellow-star.svg";
+import add from "../../assets/add.svg";
 import "./Movie.css";
 import { useState } from "react";
 
@@ -12,6 +13,7 @@ function Movie() {
     const [watched, setWatched] = useState(false);
     const [rate, setRate] = useState(-1);
     const [showRatingButtons, setShowRatingButtons] = useState(false);
+    const [showReviewInput, setShowReviewInput] = useState(false);
 
     function renderRatingButtons() {
         const ratings = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -79,6 +81,21 @@ function Movie() {
     function handleRatingClick(rating: number) {
         setRate(rating);
         setShowRatingButtons(!showRatingButtons);
+    }
+
+    function handleReviewClick() {
+        setShowReviewInput(!showReviewInput);
+    }
+
+    function handleReviewSubmit() {
+        const inputEl = document.getElementById('input-review') as HTMLInputElement;
+        const review = inputEl.value;
+        
+        if (review === '') {
+            return;
+        }
+
+        console.log(review);
     }
 
     return (
@@ -157,7 +174,21 @@ function Movie() {
                         </div>
                         <div className="names-text">{renderNames()}</div>
                     </div>
+                    <div className="review-button">
+                        <button onClick={() => handleReviewClick()}>
+                            <text>Review</text>
+                            <img src={add}></img>
+                        </button>
+                    </div>
                 </div>
+                {showReviewInput &&
+                    <div className="review-input">
+                        <textarea id='input-review' placeholder="Write your review here"></textarea>
+                        <div className="submit-review">
+                            <button onClick={() => handleReviewSubmit()}>Submit</button>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     );
