@@ -1,27 +1,26 @@
-import { AxiosError } from "axios";
-import api from "./api";
 import prisma from "../../../../libs/prisma";
+import { RatingService } from "../../ratings/services/RatingService";
 import { MovieRepository } from "../repositories/MovieRepository";
 
 class MovieServiceClass {
   async getForYouMovies(userId: string) {
-    const topUserReview = await MovieRepository.getTopUserReview(userId);
+    const userTopRatedMovie = await RatingService.getUserTopRatedMovie(userId);
     
-    if (!topUserReview) {
+    if (!userTopRatedMovie) {
       const topRatedMovies = await this.getTopRatedMovies();
       return topRatedMovies;
     }
   
-    const forYouMovies = await MovieRepository.getForYouMovies(topUserReview);
+    const forYouMovies = await MovieRepository.getForYouMovies(userTopRatedMovie.movieId);
 
     const forYouMoviesCards = forYouMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
-      // const movieRating = MovieReviewService.getMovieRating(movie.id);
+      const movieRating = RatingService.getRating(movie.id);
 
       return {
         "id": movie.id,
         "title": movie.title,
         "poster_path": movie.poster_path,
-        "rating": movie.vote_average
+        "rating": movieRating
       }
     });
 
@@ -32,13 +31,13 @@ class MovieServiceClass {
     const topRatedMovies = await MovieRepository.getTopRatedMovies();
 
     const topRatedMoviesCards = topRatedMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
-      // const movieRating = MovieReviewService.getMovieRating(movie.id);
+      const movieRating = RatingService.getRating(movie.id);
 
       return {
         "id": movie.id,
         "title": movie.title,
         "poster_path": movie.poster_path,
-        "rating": movie.vote_average
+        "rating": movieRating
       }
     });
 
@@ -49,13 +48,13 @@ class MovieServiceClass {
     const nowPlayingMovies = await MovieRepository.getNowPlayingMovies();
 
     const nowPlayingMoviesCards = nowPlayingMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
-      // const movieRating = MovieReviewService.getMovieRating(movie.id);
+      const movieRating = RatingService.getRating(movie.id);
       
       return {
         "id": movie.id,
         "title": movie.title,
         "poster_path": movie.poster_path,
-        "rating": movie.vote_average
+        "rating": movieRating
       }
     });
 
@@ -150,7 +149,7 @@ class MovieServiceClass {
       return apiRating;
     }
 
-    const sum = ratings.reduce((acc, rating) => acc + rating.rating, 0); 
+    const sum = ratings.reduce((acc, rating) => acc + rating.rating!, 0); 
 
     const average = (sum + apiRating) / (ratings.length + 1);
 

@@ -1,21 +1,15 @@
 import { AxiosError } from "axios";
 import prisma from "../../../../libs/prisma";
 import { Prisma } from '@prisma/client'
-import api from "../services/api";
+import MovieAPI from "./MovieAPI";
+import { RatingService } from "../../ratings/services/RatingService";
 
 class MovieRepositoryClass {
   getTopUserReview(userId: string): any {
-    return [{id: "1", userId: "1", movieId: "1", rating: 5, review: "Great movie!"}];
-    // return prisma.movieReview.findFirst({
-    //   where: {
-    //     userId: userId
-    //   }
-    // });
-
   }
 
   async getForYouMovies(movieId: string) {
-    const forYouMovies = await api.get(`/movie/${movieId}/recommendations`).then(
+    const forYouMovies = await MovieAPI.get(`/movie/${movieId}/recommendations`).then(
       (response) => {
         return response.data;
       }
@@ -30,7 +24,7 @@ class MovieRepositoryClass {
   }
 
   async getTopRatedMovies() {
-    const topRatedMovies = await api.get('/movie/top_rated?language=pt-BR').then(
+    const topRatedMovies = await MovieAPI.get('/movie/top_rated?language=pt-BR').then(
       (response) => {
         return response.data.results;
       }
@@ -45,7 +39,7 @@ class MovieRepositoryClass {
   }
 
   async getNowPlayingMovies() {
-    const nowPlayingMovies = await api.get('/movie/now_playing?language=pt-BR').then(
+    const nowPlayingMovies = await MovieAPI.get('/movie/now_playing?language=pt-BR').then(
       (response) => {
         return response.data.results;
       }
@@ -60,7 +54,7 @@ class MovieRepositoryClass {
   }
 
   async getMovieDetails(movieId: string) {
-    const movieDetails = await api.get(`/movie/${movieId}`).then(
+    const movieDetails = await MovieAPI.get(`/movie/${movieId}`).then(
       (response) => {
         return response.data;
       }
@@ -75,7 +69,7 @@ class MovieRepositoryClass {
   }
 
   async getMovieCredits(movieId: string) {
-    const movieCredits = await api.get(`/movie/${movieId}/credits`).then(
+    const movieCredits = await MovieAPI.get(`/movie/${movieId}/credits`).then(
       (response) => {
         return response.data;
       }
@@ -90,7 +84,7 @@ class MovieRepositoryClass {
   }
 
   async getMovieProviders(movieId: string) {
-    const movieProviders = await api.get(`/movie/${movieId}/watch/providers`).then(
+    const movieProviders = await MovieAPI.get(`/movie/${movieId}/watch/providers`).then(
       (response) => {
         return response.data;
       }

@@ -1,8 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { MovieService } from '../services/MovieService';
-import { loginMiddleware,
-  verifyJWT,
-  notLoggedIn } from '../../../middlewares/auth';
+import { verifyJWT } from '../../../middlewares/auth';
 import { statusCodes } from '../../../../utils/constants/status-codes';
 export const router = Router();
 
@@ -106,7 +104,7 @@ router.post('/:id/watched',
   verifyJWT,
   async(req: Request, res: Response, next:NextFunction) => {
     try {
-      const watched = await MovieService.createWatched(req.params.id, req.userId!);
+      const watched = await MovieService.watchedMovie(req.params.id, req.userId!);
       res.status(statusCodes.CREATED).json(watched);
     } catch (error) {
       next(error);

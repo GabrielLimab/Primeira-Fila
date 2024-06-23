@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getEnv } from '../../../../utils/functions/get-env';
 
-const api = axios.create({
+const MovieAPI = axios.create({
     baseURL: getEnv('TMDB_BASE_URL'),
     headers: {
         Accept: 'application/json',
@@ -9,4 +9,4 @@ const api = axios.create({
     }
 });
 
-export default api;
+export default MovieAPI;
