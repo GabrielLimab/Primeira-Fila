@@ -97,6 +97,26 @@ class MovieServiceClass {
   }
 
   async createRating(id: string, rating: number, userId: string) {
+    const existentRating = await prisma.rating.findFirst({
+      where: {
+        movieId: id,
+        userId: userId
+      }
+    });
+
+    if (existentRating) {
+      await prisma.rating.update({
+        where: {
+          id: existentRating.id
+        },
+        data: {
+          rating: rating
+        }
+      });
+
+      return existentRating;
+    }
+    
     const createdRating = await prisma.rating.create({
       data: {
         rating: rating,
