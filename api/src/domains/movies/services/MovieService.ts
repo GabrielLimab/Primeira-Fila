@@ -133,23 +133,16 @@ class MovieServiceClass {
   }
 
   async getRating(id: string) {
-    const rating = await api.get(`/movie/${id}`).then(
-      (response) => {
-        return response.data;
-      }
-    ).catch(
-      (error: AxiosError) => {
-        if (error.response) {
-          throw error.response.data;
-        }
-    });
+    const rating = await MovieRepository.getMovieDetails(id);
 
     const apiRating = rating.vote_average;
 
     const ratings = await prisma.rating.findMany({
       where: {
         movieId: id,
-        rating: !null
+        rating: {
+          not: null
+        }
       }
     });
     
@@ -204,7 +197,9 @@ class MovieServiceClass {
     const reviews = await prisma.rating.findMany({
       where: {
         movieId: id,
-        review: !null
+        rating: {
+          not: null
+        }
       }
     });
 
