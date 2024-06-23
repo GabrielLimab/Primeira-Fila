@@ -1,13 +1,7 @@
 import { AxiosError } from "axios";
-import prisma from "../../../../libs/prisma";
-import { Prisma } from '@prisma/client'
 import MovieAPI from "./MovieAPI";
-import { RatingService } from "../../ratings/services/RatingService";
 
 class MovieRepositoryClass {
-  getTopUserReview(userId: string): any {
-  }
-
   async getForYouMovies(movieId: string) {
     const forYouMovies = await MovieAPI.get(`/movie/${movieId}/recommendations`).then(
       (response) => {
