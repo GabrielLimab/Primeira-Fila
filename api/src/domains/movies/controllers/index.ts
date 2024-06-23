@@ -16,3 +16,17 @@ router.get('/trending',
   },
 );
 
+router.get('/:id',
+  verifyJWT,
+  async(req: Request, res: Response, next:NextFunction) => {
+    try {
+      const movieImages = await MovieService.getMovieDetails(req.params.id);
+      res.status(statusCodes.SUCCESS).json(movieImages);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+
+
