@@ -1,20 +1,10 @@
-.card {
-  background-color: #a3a3a35b;
+.card-container {
+  background-color: rgba(163, 163, 163, 0.05);
+  font-family: "Roboto";
   color: #c3c3c3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 10em;
-  height: 15em;
-}
-
-.movie-title {
-  font-family: "Roboto";
-}
-
-.rate-info {
-  display: flex;
-}
-
-.avg-rate {
+  width: 15em;
+  height: 20em;
 }

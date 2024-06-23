@@ -7,13 +7,12 @@ import "./Card.css";
 interface CardProps {
   title: string;
   image: string;
-  link: string;
   rate: number;
 }
 
-function Card({ title, image, link, rate }: CardProps) {
+function Card({ title, image, rate }: CardProps) {
   return (
-    <div className="card">
+    <div className="card-container">
       <img src={image} alt="card" />
       <div className="movie-title">{title}</div>
       <div className="rate-info">
@@ -27,7 +26,6 @@ function Card({ title, image, link, rate }: CardProps) {
         </div>
         <div className="info">{info && <img src={info} />}</div>
       </div>
-      <a href={link}>Resenhas</a>
     </div>
   );
 }
