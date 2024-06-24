@@ -4,8 +4,8 @@ import user from "../../assets/user.png";
 import vector from "../../assets/vector.png";
 import GlobalStyle from "../Styles/Font";
 import { useNavigate } from "react-router-dom";
+
 import {
-  CategorySelect,
   HeaderContainer,
   HeaderContent,
   LeftHeader,
@@ -17,14 +17,31 @@ import {
   SearchInput,
   StyledLink,
   UserIcon,
-  VectorIcon,
-} from "./Header.style";
+  VectorIcon
+} from './Header.style';
+import { useSearch } from "../Ranking/SearchContext";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [searchText, setSearchText] = useState<string>('');
+  const { setSearchTerm } = useSearch();
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/auth");
+  };
+
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value);
+  };
+
+  const handleSearchSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    if (searchText.trim()) {
+      setSearchTerm(searchText);
+      navigate(`/search?query=${searchText}`);
+    }
   };
   return (
     <HeaderContainer>
@@ -39,28 +56,33 @@ const Header = () => {
           <StyledLink to="/contact">Resenhas</StyledLink>
           <StyledLink to="/contact">Seguindo</StyledLink>
         </LeftHeader>
-        <SearchBar>
-          <CategorySelect>
-            <option value="all">All</option>
-            <option value="movies">Filmes</option>
-            <option value="tv-shows">Séries</option>
-          </CategorySelect>
-          <SearchInput type="text" placeholder="Buscar Primeira Fila" />
-          <SearchIcon src={search} alt="search" />
-        </SearchBar>
-        <RightButtons>
-          <StyledLink to="/minha-lista" className="ok">
-            <VectorIcon src={vector} alt="vector" />
-            <RightButtonsText>Minha lista</RightButtonsText>
-          </StyledLink>
-        </RightButtons>
-        <RightButtons>
-          <StyledLink to="/usuario" className="ok">
-            <UserIcon src={user} alt="user" />
-            <RightButtonsText>Usuário</RightButtonsText>
-          </StyledLink>
-          <button onClick={handleLogout}>Logout</button>
-        </RightButtons>
+        <form onSubmit={handleSearchSubmit}>
+            <SearchBar>
+                <SearchInput type="text" placeholder="Buscar Primeira Fila" onChange={handleSearchChange}/>
+                <SearchIcon type="submit">
+                    <img src={search} alt="search" />
+                </SearchIcon>
+            </SearchBar>
+        </form>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <RightButtons>
+                <VectorIcon src={vector} alt="vector" />
+                <StyledLink to="/minha-lista" className="ok">
+                    <RightButtonsText>Minha lista</RightButtonsText>
+                </StyledLink>
+            </RightButtons>
+            <RightButtons>
+                <UserIcon src={user} alt="user" />
+                <StyledLink to="/user" className="ok">
+                    <RightButtonsText>Usuário</RightButtonsText>
+                </StyledLink>
+            </RightButtons>
+            <RightButtons>
+                <StyledLink to="/auth" onClick={handleLogout} className="ok">
+                    <RightButtonsText>Sair</RightButtonsText>
+                </StyledLink>
+            </RightButtons>
+        </div>
       </HeaderContent>
     </HeaderContainer>
   );
