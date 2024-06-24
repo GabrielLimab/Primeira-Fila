@@ -1,5 +1,5 @@
 import { ButtonContainer, Dot, FollowButtonContainer, InfoTag, InfoTagsContainer, InfoTitle, ReviewButtons, ReviewCard, ReviewContent, ReviewDate, ReviewHeader, ReviewMark, ReviewText, ReviewTitle, ReviewUser, ReviewUserAndDate, Reviews, UserImage, UserInfo, UserInfoCard, UserInfoContainer, UserName, UserNameAndImage, UserPageContainer } from "./UserPage.style";
-import hulk from "../../assets/hulk.png";
+import johnSnow from "../../assets/johnSnow.jpg";
 import AddIcon from "../../assets/AddIcon.png";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import StarIcon from "../../assets/StarIcon.png"
@@ -17,8 +17,8 @@ const UserPage = () => {
             }} />
             <UserInfoContainer>
                 <UserNameAndImage>
-                    <UserName>John Doe</UserName>
-                    <UserImage src={hulk} alt="userPhoto"/>
+                    <UserName>John Snow</UserName>
+                    <UserImage src={johnSnow} alt="userPhoto"/>
                 </UserNameAndImage>
                 <UserInfo>
                     <UserInfoCard>
