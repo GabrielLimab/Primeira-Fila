@@ -34,7 +34,7 @@ import DislikeIcon from "../../assets/DislikeIcon.svg";
 const UserPage = () => {
   return (
     <UserPageContainer>
-      {/* <div DESCOMENTA ISSO E VÊ SE FICA BOM
+      <div
         className="background"
         style={{
           background: "rgba(157, 139, 248, 0.498)",
@@ -52,7 +52,7 @@ const UserPage = () => {
           pointerEvents: "none",
           justifyContent: "center",
         }}
-      /> */}
+      />
       <hr
         style={{
           border: "none",

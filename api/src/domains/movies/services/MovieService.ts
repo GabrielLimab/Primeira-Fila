@@ -67,7 +67,7 @@ class MovieServiceClass {
 
     const actors = movieCredits.cast.filter((actor: { known_for_department: string }) => actor.known_for_department === "Acting");
     const stars = actors.slice(0, 5);
-    
+
     const directors = movieCredits.crew.filter((crewMember: { known_for_department: string }) => crewMember.known_for_department === "Directing");
     const directorsNames = directors.map((director: { name: string }) => director.name);
 
@@ -93,8 +93,6 @@ class MovieServiceClass {
       "writers": writersNames,
       "providers": providers
     }
-    console.log("7");
-
     return movieInfo;
   } 
 }
