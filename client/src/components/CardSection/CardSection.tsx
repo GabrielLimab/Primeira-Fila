@@ -16,53 +16,6 @@ interface SectionProps {
   type: string;
 }
 
-async function getCards(type: string) {
-  let cards: CardProps[] = [];
-  switch (type) {
-    case "for-you":
-      cards = await getRecommendedMovies();
-      break;
-    case "top-rated":
-      cards = await getTopRatedMovies();
-      break;
-    case "now-playing":
-      cards = await getNowPlayingMovies();
-      break;
-  }
-
-  return cards;
-}
-
-function renderCards(
-  cards: any,
-  currentPage: number,
-  numberOfVisibleCards: number
-) {
-  if (cards.length === 0) {
-    return (
-      <div className="empty-card-section">
-        <h1>No movies found</h1>
-      </div>
-    );
-  }
-
-  return cards
-    .slice(
-      currentPage * numberOfVisibleCards,
-      (currentPage + 1) * numberOfVisibleCards
-    )
-    .map((card: CardProps) => {
-      return (
-        <Card
-          key={card.title}
-          title={card.title}
-          poster_path={card.poster_path}
-          rate={card.rate}
-        />
-      );
-    });
-}
-
 interface Card {
   image: string;
   title: string;
@@ -70,11 +23,50 @@ interface Card {
 }
 
 function CardSection({ title, subtitle, type }: SectionProps) {
-  const [numberOfVisibleCards, setnumberOfVisibleCards] = useState(1);
+  const [numberOfVisibleCards, setNumberOfVisibleCards] = useState(1);
   const [cards, setCards] = useState<CardProps[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const cardSectionRef = useRef<HTMLDivElement>(null);
   const totalPages = Math.ceil(cards.length / numberOfVisibleCards);
+
+  async function getCards(type: string) {
+    let cards: CardProps[] = [];
+    switch (type) {
+      case "for-you":
+        cards = await getRecommendedMovies();
+        break;
+      case "top-rated":
+        cards = await getTopRatedMovies();
+        break;
+      case "now-playing":
+        cards = await getNowPlayingMovies();
+        break;
+    }
+
+    return cards;
+  }
+
+  function renderCards(
+    currentPage: number,
+    numberOfVisibleCards: number,
+    cards?: any
+  ) {
+    return cards
+      ?.slice(
+        currentPage * numberOfVisibleCards,
+        (currentPage + 1) * numberOfVisibleCards
+      )
+      .map((card: CardProps, index: number) => {
+        return (
+          <Card
+            key={index}
+            title={card.title}
+            poster_path={card.poster_path}
+            rate={card.rate}
+          />
+        );
+      });
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -87,10 +79,7 @@ function CardSection({ title, subtitle, type }: SectionProps) {
           cardWidth,
           Math.floor(sectionWidth / cardWidth)
         );
-        if (cardWidth == 140) {
-          setnumberOfVisibleCards(numberOfVisibleCards - 1);
-        }
-        setnumberOfVisibleCards(Math.floor(sectionWidth / cardWidth));
+        setNumberOfVisibleCards(Math.floor(sectionWidth / cardWidth));
       }
     };
     window.addEventListener("resize", handleResize);
@@ -145,7 +134,7 @@ function CardSection({ title, subtitle, type }: SectionProps) {
       </div>
 
       <div className="card-section" ref={cardSectionRef}>
-        {renderCards(cards, currentPage, numberOfVisibleCards)}
+        {renderCards(currentPage, numberOfVisibleCards, cards)}
       </div>
     </div>
   );
