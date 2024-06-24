@@ -98,6 +98,7 @@ function CardSection({ title, subtitle, type }: SectionProps) {
     return visibleCards.map((card: CardProps, index: number) => (
       <Card
         key={index}
+        movieId={card.id}
         title={card.title}
         poster_path={card.poster_path}
         rate={card.rating}

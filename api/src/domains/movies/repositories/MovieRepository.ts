@@ -13,7 +13,7 @@ class MovieRepositoryClass {
           throw error.response.data;
         }
     });
-
+    
     return forYouMovies;
   }
 
