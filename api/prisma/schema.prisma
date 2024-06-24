@@ -19,11 +19,11 @@ model User {
 }
 
 model Rating {
-  id         String   @id @default(uuid())
-  movieId    String
-  rating     Int?
-  review     String?
-  watched    Boolean?
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
+  id      String  @id @default(uuid())
+  movieId Int
+  rating  Int?
+  review  String?
+  watched Boolean @default(false)
+  user    User    @relation(fields: [userId], references: [id])
+  userId  String
 }

@@ -6,23 +6,30 @@ import Layout from "./components/Layout/Layout";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Profile from "./components/Profile/Profile";
 import Movie from "./components/Movie/Movie";
+import UserPage from "./components/UserPage/UserPage";
+import SearchPage from "./components/Ranking/SearchPage";
+import { SearchProvider } from "./components/Ranking/SearchContext";
 
 function App() {
 
   return (
     <div className="App">
       <Router>
-        <Layout>
-          <Routes>
-            <Route element={<PrivateRoute />}>
-              <Route element={<Home />} path="/" />
-              <Route element={<Profile />} path="users/:teste" />
-              <Route element={<Movie/>} path="movies/:id" />
-              <Route element={<h1>Not Found</h1>} path="*" />
-            </Route>
-            <Route element={<Auth />} path="auth" />
-          </Routes>
-        </Layout>
+        <SearchProvider>
+            <Layout>
+            <Routes>
+                <Route element={<PrivateRoute />}>
+                <Route element={<Home />} path="/" />
+                <Route element={<Profile />} path="users/:teste" />
+                <Route element={<Movie/>} path="movies/:id" />
+                <Route element={<h1>Not Found</h1>} path="*" />
+                <Route element={<UserPage />} path="user" />
+                <Route element={<SearchPage />} path="search"/>
+                </Route>
+                <Route element={<Auth />} path="auth" />
+            </Routes>
+            </Layout>
+        </SearchProvider>
       </Router>
     </div>
   );

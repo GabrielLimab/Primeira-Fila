@@ -1,44 +1,42 @@
-import { AxiosError } from "axios";
-import api from "./api";
 import prisma from "../../../../libs/prisma";
+import { RatingService } from "../../ratings/services/RatingService";
 import { MovieRepository } from "../repositories/MovieRepository";
 
 class MovieServiceClass {
   async getForYouMovies(userId: string) {
-    const topUserReview = await MovieRepository.getTopUserReview(userId);
+    const userTopRatedMovie = await RatingService.getUserTopRatedMovie(userId);
     
-    if (!topUserReview) {
-      const topRatedMovies = await this.getTopRatedMovies();
+    if (!userTopRatedMovie) {
+      const topRatedMovies = (await this.getTopRatedMovies()).reverse();
       return topRatedMovies;
     }
   
-    const forYouMovies = await MovieRepository.getForYouMovies(topUserReview);
+    const forYouMovies = await MovieRepository.getForYouMovies(userTopRatedMovie.movieId);
 
-    const forYouMoviesCards = forYouMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
-      // const movieRating = MovieReviewService.getMovieRating(movie.id);
+    const forYouMoviesCards = forYouMovies.map((movie: { id: number; title: string; poster_path: string; vote_average: number; }) => {
+      // const movieRating = RatingService.getRating(movie.id);
 
       return {
         "id": movie.id,
         "title": movie.title,
         "poster_path": movie.poster_path,
-        "rating": movie.vote_average
+        "rating": movie.vote_average.toFixed(1)
       }
     });
 
     return forYouMoviesCards;
   }
 
-  async getTopRatedMovies() {
+  async getTopRatedMovies(): Promise<{ id: number; title: string; poster_path: string; rating: number; }[]> {
     const topRatedMovies = await MovieRepository.getTopRatedMovies();
-
-    const topRatedMoviesCards = topRatedMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
-      // const movieRating = MovieReviewService.getMovieRating(movie.id);
+    const topRatedMoviesCards = topRatedMovies.map((movie: { id: number; title: string; poster_path: string; vote_average: number; }) => {
+      // const movieRating = RatingService.getRating(movie.id);
 
       return {
         "id": movie.id,
         "title": movie.title,
         "poster_path": movie.poster_path,
-        "rating": movie.vote_average
+        "rating": movie.vote_average.toFixed(1)
       }
     });
 
@@ -48,21 +46,21 @@ class MovieServiceClass {
   async getNowPlayingMovies() {
     const nowPlayingMovies = await MovieRepository.getNowPlayingMovies();
 
-    const nowPlayingMoviesCards = nowPlayingMovies.map((movie: { id: string; title: string; poster_path: string; vote_average: number; }) => {
-      // const movieRating = MovieReviewService.getMovieRating(movie.id);
+    const nowPlayingMoviesCards = nowPlayingMovies.map((movie: { id: number; title: string; poster_path: string; vote_average: number; }) => {
+      // const movieRating = RatingService.getRating(movie.id);
       
       return {
         "id": movie.id,
         "title": movie.title,
         "poster_path": movie.poster_path,
-        "rating": movie.vote_average
+        "rating": movie.vote_average.toFixed(1)
       }
     });
 
     return nowPlayingMoviesCards;
   }
 
-  async getMovieDetails(movieId: string) {
+  async getMovieDetails(movieId: number) {
     const movieDetails = await MovieRepository.getMovieDetails(movieId);
     const movieCredits = await MovieRepository.getMovieCredits(movieId);
     const movieProviders = await MovieRepository.getMovieProviders(movieId);
@@ -100,7 +98,7 @@ class MovieServiceClass {
     return movieInfo;
   }
 
-  async createRating(id: string, rating: number, userId: string) {
+  async createRating(id: number, rating: number, userId: string) {
     const existentRating = await prisma.rating.findFirst({
       where: {
         movieId: id,
@@ -153,8 +151,7 @@ class MovieServiceClass {
     return rating.rating;
   }
 
-
-  async getAverageRating(id: string) {
+  async getAverageRating(id: number) {
     const rating = await MovieRepository.getMovieDetails(id);
 
     const apiRating = rating.vote_average;
@@ -175,7 +172,7 @@ class MovieServiceClass {
       };
     }
 
-    const sum = ratings.reduce((acc, rating) => acc + rating.rating, 0); 
+    const sum = ratings.reduce((acc, rating) => acc + rating.rating!, 0); 
 
     const average = (sum + (apiRating * rating.vote_count)) / (ratings.length + rating.vote_count);
 
@@ -187,7 +184,7 @@ class MovieServiceClass {
     return ratingObject;
   }
 
-  async createReview(id: string, review: string, userId: string) {
+  async createReview(id: number, review: string, userId: string) {
     const existentRating = await prisma.rating.findFirst({
       where: {
         movieId: id,
@@ -223,7 +220,7 @@ class MovieServiceClass {
     return createdRating;
   }
 
-  async getReviews(id: string) {
+  async getReviews(id: number) {
     const reviews = await prisma.rating.findMany({
       where: {
         movieId: id,
@@ -244,7 +241,7 @@ class MovieServiceClass {
     return reviews;
   }
 
-  async watchedMovie(id: string, userId: string) {
+  async watchedMovie(id: number, userId: string) {
     const existentRating = await prisma.rating.findFirst({
       where: {
         movieId: id,

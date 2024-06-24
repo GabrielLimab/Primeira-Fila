@@ -1,10 +1,11 @@
 import { CardProps } from '../types/CardProps';
+import { MovieProps } from '../types/MovieProps';
 import api from './api';
 
 export const getRecommendedMovies = async () => {
   try {
-    const response = await api.get('/movies/recommended/') as CardProps[];
-    return response;
+    const response = await api.get('/movies/for-you/');
+    return response.data as CardProps[];
   } catch (error) {
     console.error('Error fetching movies data:', error);
     throw error;
@@ -14,8 +15,8 @@ export const getRecommendedMovies = async () => {
 
 export const getTopRatedMovies = async () => {
   try {
-    const response = await api.get('/movies/top-rated/') as CardProps[];
-    return response;
+    const response = await api.get('/movies/top-rated/');
+    return response.data as CardProps[];
   } catch (error) {
     console.error('Error fetching movies data:', error);
     throw error;
@@ -24,8 +25,8 @@ export const getTopRatedMovies = async () => {
 
 export const getNowPlayingMovies = async () => {
   try {
-    const response = await api.get('/movies/now-playing/') as CardProps[];
-    return response;
+    const response = await api.get('/movies/now-playing/');
+    return response.data as CardProps[];
   } catch (error) {
     console.error('Error fetching movies data:', error);
     throw error;
@@ -44,7 +45,7 @@ export const getWatchedMovie = async (id: string) => {
 
 export const getMovieRating = async (id: string) => {
   try {
-    const response = await api.get(`/movies/${id}/rating`);
+    const response = await api.get(`/ratings/${id}/rating`);
     return response;
   } catch (error) {
     console.error('Error fetching movies data:', error);
@@ -54,7 +55,7 @@ export const getMovieRating = async (id: string) => {
 
 export const getMovieAverageRating = async (id: string) => {
   try {
-    const response = await api.get(`/movies/${id}/average-rating`);
+    const response = await api.get(`/ratings/${id}/average-rating`);
     return response;
   } catch (error) {
     console.error('Error fetching movies data:', error);
@@ -74,7 +75,7 @@ export const getMovieDetails = async (id: string) => {
 
 export const createRating = async (id: string, rating: number) => {
   try {
-    const response = await api.post(`/movies/${id}/rating`, { rating });
+    const response = await api.post(`/ratings/${id}/rating`, {rating: rating });
     return response;
   } catch (error) {
     console.error('Error fetching movies data:', error);
@@ -82,9 +83,9 @@ export const createRating = async (id: string, rating: number) => {
   }
 }
 
-export const watchedMovie = async (id: string) => {
+export const watchedMovie = async (id: string, watched: boolean) => {
   try {
-    const response = await api.post(`/movies/${id}/watched`);
+    const response = await api.post(`/ratings/${id}/rating`, {watched: watched});
     return response;
   } catch (error) {
     console.error('Error fetching movies data:', error);
@@ -94,7 +95,7 @@ export const watchedMovie = async (id: string) => {
 
 export const createReview = async (id: string, review: string) => {
   try {
-    const response = await api.post(`/movies/${id}/review`, { review });
+    const response = await api.post(`/ratings/${id}/rating`, {review: review });
     return response;
   } catch (error) {
     console.error('Error fetching movies data:', error);
@@ -104,10 +105,20 @@ export const createReview = async (id: string, review: string) => {
 
 export const getReviews = async (id: string) => {
   try {
-    const response = await api.get(`/movies/${id}/reviews`);
+    const response = await api.get(`/ratings/${id}/reviews`);
     return response;
   } catch (error) {
     console.error('Error fetching movies data:', error);
     throw error;
   }
+}
+export const getMovieByName = async (movieName: string) => {
+    try {
+        console.log("Chegou aqui")
+        const response = await api.get(`/movies/${movieName}`) as MovieProps[];
+        return response;
+    } catch (error) {
+        console.error('Error fetching movies data:', error);
+        throw error;
+    }
 }

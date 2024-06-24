@@ -25,6 +25,7 @@ function Movie() {
     const [user, setUser] = useState({} as any);
     const [reviews, setReviews] = useState([] as any);
     const [loading, setLoading] = useState(true);
+    const [fetchReviews, setFetchReviews] = useState(false);
 
     useEffect(() => {
         if (!id) return;
@@ -83,7 +84,7 @@ function Movie() {
         }
 
         getReview();
-      }, [reviews]);
+      }, [fetchReviews]);
 
       useEffect(() => {
         const getAverageRating = async () => {
@@ -194,7 +195,7 @@ function Movie() {
     }
 
     function handleWatchedClick() {
-        watchedMovie(id);
+        watchedMovie(id, !watched);
         setWatched(!watched);
     }
 
@@ -212,15 +213,16 @@ function Movie() {
         setShowReviewInput(!showReviewInput);
     }
 
-    function handleReviewSubmit() {
+    async function handleReviewSubmit() {
         const reviewText = (document.getElementById('input-review') as HTMLInputElement).value;
-        createReview(id, reviewText);
+        await createReview(id, reviewText);
         const userReview = reviews.filter((review) => {
             return review.user.id === user.id;
         })
         if (userReview.length === 0) {
             setReviews([...reviews, {review: reviewText, user: user}]);
         }
+        setFetchReviews(!fetchReviews);
         setShowReviewInput(!showReviewInput);
     }
 

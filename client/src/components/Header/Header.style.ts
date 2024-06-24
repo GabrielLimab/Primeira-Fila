@@ -26,18 +26,12 @@ export const LeftHeader = styled.div`
 `;
 
 export const StyledLink = styled(Link)`
-.pagesLinkContainer {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.pageLink {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   color: #c3c3c3;
   text-decoration: none;
   padding: 8px 10px;
+  align-self: center;
 
   &:hover {
     color: #fff;
@@ -85,15 +79,22 @@ export const SearchInput = styled.input`
   text-align: left;
 `;
 
-export const SearchIcon = styled.img`
-  height: 24px;
-  width: 24px;
+export const SearchIcon = styled.button`
+  background: none;
+  padding-top: 5px;
+  border: none;
+  cursor: pointer;
+  img{ 
+    height: 24px;
+    width: 24px;
+  }
 `;
 
 export const RightButtons = styled.div`
   display: flex;
   align-items: center;
-  gap: 5px;
+  justify-content: space-between;
+  gap: 0px;
 `;
 
 export const VectorIcon = styled.img`
@@ -111,7 +112,8 @@ export const RightButtonsText = styled.span`
   font-size: 16px;
   color: #c3c3c3;
   text-decoration: none;
-  padding-left: 5px;
+  padding-right: 10px;
   padding-top: 2.5px;
   padding-bottom: 2.5px;
+  margin: 0px
 `;
