@@ -124,6 +124,7 @@ class RatingServiceClass {
       },
       select: {
         review: true,
+        rating: true,
         user: {
           select: {
             name: true

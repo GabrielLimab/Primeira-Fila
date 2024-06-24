@@ -20,6 +20,7 @@ import {
 import { getLoggedUser } from "../../services/user";
 import { useEffect, useInsertionEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Review from "../Review/Review";
 
 function Movie() {
   const { id } = useParams() as { id: string };
@@ -249,10 +250,13 @@ function Movie() {
 
     return reviews.map((review, index) => {
       return (
-        <div key={index} className="review">
-          <p>{review.review}</p>
-          <p className="user-name">{review.user.name}</p>
-        </div>
+        <Review
+          key={index}
+          movieName={movie.title}
+          rating={review.rating}
+          name={review.user.name}
+          content={review.review}
+        ></Review>
       );
     });
   }
@@ -359,7 +363,7 @@ function Movie() {
         )}
         {reviews.length > 0 && (
           <div className="reviews-container">
-            <h2>User Reviews</h2>
+            <h2>Resenhas dos usuários</h2>
             {renderReviews()}
           </div>
         )}
