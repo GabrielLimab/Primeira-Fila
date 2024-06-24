@@ -7,6 +7,8 @@ export const HeaderContainer = styled.header`
   justify-content: space-around;
   align-items: center;
   height: 73px;
+  max-width: 100vw;
+  width: 100%;
 `;
 
 export const HeaderContent = styled.div`
@@ -21,8 +23,7 @@ export const LeftHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 439px;
-  gap: 20px;
+  gap: 10px;
 `;
 
 export const StyledLink = styled(Link)`
@@ -49,7 +50,6 @@ export const SearchBar = styled.div`
   background-color: #1b1b1b;
   border-radius: 10px;
   padding: 4px 18px;
-  width: 616px;
 `;
 
 export const CategorySelect = styled.select`

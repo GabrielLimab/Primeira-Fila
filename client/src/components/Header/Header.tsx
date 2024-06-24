@@ -59,9 +59,7 @@ const Header = () => {
             <Logo src={logo} alt="logo" />
           </StyledLink>
           <StyledLink to="/">Filmes</StyledLink>
-          <StyledLink to="/about">Séries</StyledLink>
           <StyledLink to="/contact">Resenhas</StyledLink>
-          <StyledLink to="/contact">Seguindo</StyledLink>
         </LeftHeader>
         <form onSubmit={handleSearchSubmit}>
           <SearchBar>

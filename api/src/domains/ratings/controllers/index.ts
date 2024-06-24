@@ -52,6 +52,18 @@ router.get('/:id/reviews',
   },
 );
 
+router.get('/user/reviews',
+    verifyJWT,
+    async(req: Request, res: Response, next:NextFunction) => {
+      try {
+        const reviews = await RatingService.getRatingByUser(req.userId!);
+        res.status(statusCodes.SUCCESS).json(reviews);
+      } catch (error) {
+        next(error);
+      }
+    },
+)
+
 router.get('/:id/rating',
   verifyJWT,
   async(req: Request, res: Response, next:NextFunction) => {

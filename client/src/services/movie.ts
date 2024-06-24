@@ -112,6 +112,17 @@ export const getReviews = async (id: string) => {
     throw error;
   }
 }
+
+export const getReviewsByUser = async () => {
+    try {
+        const response = await api.get(`/ratings/user/reviews`);
+        return response;
+    } catch (error) {
+        console.error('Error fetching movies data:', error);
+        throw error;
+    }
+}
+
 export const getMovieByName = async (movieName: string) => {
     try {
         console.log("Chegou aqui")
