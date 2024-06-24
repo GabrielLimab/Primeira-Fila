@@ -35,7 +35,7 @@ export const getNowPlayingMovies = async () => {
 
 export const getWatchedMovie = async (id: string) => {
   try {
-    const response = await api.post(`/movies/${id}/watched`);
+    const response = await api.get(`/ratings/${id}/watched`);
     return response;
   } catch (error) {
     console.error('Error fetching movies data:', error);
