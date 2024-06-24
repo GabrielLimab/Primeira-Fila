@@ -2,10 +2,10 @@ import { AxiosError } from "axios";
 import MovieAPI from "./MovieAPI";
 
 class MovieRepositoryClass {
-  async getForYouMovies(movieId: string) {
+  async getForYouMovies(movieId: number) {
     const forYouMovies = await MovieAPI.get(`/movie/${movieId}/recommendations`).then(
       (response) => {
-        return response.data;
+        return response.data.results;
       }
     ).catch(
       (error: AxiosError) => {
@@ -47,7 +47,7 @@ class MovieRepositoryClass {
     return nowPlayingMovies;
   }
 
-  async getMovieDetails(movieId: string) {
+  async getMovieDetails(movieId: number) {
     const movieDetails = await MovieAPI.get(`/movie/${movieId}`).then(
       (response) => {
         return response.data;
@@ -62,7 +62,7 @@ class MovieRepositoryClass {
     return movieDetails;
   }
 
-  async getMovieCredits(movieId: string) {
+  async getMovieCredits(movieId: number) {
     const movieCredits = await MovieAPI.get(`/movie/${movieId}/credits`).then(
       (response) => {
         return response.data;
@@ -77,7 +77,7 @@ class MovieRepositoryClass {
     return movieCredits;
   }
 
-  async getMovieProviders(movieId: string) {
+  async getMovieProviders(movieId: number) {
     const movieProviders = await MovieAPI.get(`/movie/${movieId}/watch/providers`).then(
       (response) => {
         return response.data;

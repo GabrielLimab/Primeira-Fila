@@ -12,10 +12,15 @@ interface CardProps {
 }
 
 function Card({ title, poster_path, rate }: CardProps) {
+  const BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500";
   return (
     <div className="card">
       <div className="imageContainer">
-        <img src={poster_path} alt="card" className="movie-image" />
+        <img
+          src={BASE_IMAGE_URL + poster_path}
+          alt="card"
+          className="movie-image"
+        />
         {bookmark && <img src={bookmark} className="bookmark" />}
       </div>
       <div className="movie-details">

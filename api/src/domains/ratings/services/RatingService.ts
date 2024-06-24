@@ -3,7 +3,7 @@ import prisma from "../../../../libs/prisma";
 import api from "../../movies/repositories/MovieAPI";
 
 class RatingServiceClass {
-  async createRating(movieId: string, userId: string, rating?: number, watched?: boolean, review?: string) {
+  async createRating(movieId: number, userId: string, rating?: number, watched?: boolean, review?: string) {
     const existentRating = await prisma.rating.findFirst({
       where: {
         movieId: movieId,
@@ -43,7 +43,7 @@ class RatingServiceClass {
     return createdRating;
   }
 
-  async getUserRating(movieId: string, userId: string) {
+  async getUserRating(movieId: number, userId: string) {
     const rating = await prisma.rating.findFirst({
       where: {
         movieId: movieId,
@@ -70,7 +70,7 @@ class RatingServiceClass {
     return topRating;
   }
   
-  async getRating(movieId: string) {
+  async getRating(movieId: number) {
     const rating = await api.get(`/movie/${movieId}`).then(
       (response) => {
         return response.data;
@@ -81,7 +81,7 @@ class RatingServiceClass {
           throw error.response.data;
         }
     });
-
+    
     const apiRating = rating.vote_average;
 
     const ratings = await prisma.rating.findMany({
@@ -104,7 +104,7 @@ class RatingServiceClass {
     return average;
   }
 
-  async getReviews(movieId: string) {
+  async getReviews(movieId: number) {
     const reviews = await prisma.rating.findMany({
       where: {
         movieId: movieId,
@@ -117,7 +117,7 @@ class RatingServiceClass {
     return reviews;
   }
 
-  async getWatched(movieId: string) {
+  async getWatched(movieId: number) {
     const watchedMovies = await prisma.rating.findMany({
       where: {
         movieId: movieId,

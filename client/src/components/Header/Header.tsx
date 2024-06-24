@@ -22,7 +22,6 @@ import {
 import { useSearch } from "../Ranking/SearchContext";
 import { ChangeEvent, FormEvent, useState } from "react";
 
-
 const Header = () => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState<string>('');
