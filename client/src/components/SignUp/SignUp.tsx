@@ -40,7 +40,7 @@ function SignUp({ setAuthMode }: SignUpProps) {
             throw err;
           })
           .then(() => {
-            navigate("/home");
+            navigate("/");
           });
       });
   }

@@ -32,7 +32,7 @@ router.get('/:id/reviews',
   verifyJWT,
   async(req: Request, res: Response, next:NextFunction) => {
     try {
-      const reviews = await RatingService.getReviews(req.params.id);
+      const reviews = await RatingService.getReviews(parseInt(req.params.id));
       res.status(statusCodes.SUCCESS).json(reviews);
     } catch (error) {
       next(error);

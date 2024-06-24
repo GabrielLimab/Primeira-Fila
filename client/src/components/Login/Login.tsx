@@ -31,10 +31,10 @@ function Login({ setAuthMode }: LoginProps) {
         throw err;
       })
       .then(() => {
-        navigate("/home");
+        navigate("/");
       });
     localStorage.setItem("token", "success");
-    navigate("/home");
+    navigate("/");
   }
 
   return (
