@@ -8,10 +8,9 @@ import yellowStar from "../../assets/yellow-star.svg";
 import add from "../../assets/add.svg";
 import "./Movie.css";
 import {getReviews, getWatchedMovie, getMovieRating, getMovieAverageRating, getMovieDetails, createRating, watchedMovie, createReview} from "../../services/movie";
-import { getUserById } from "../../services/user";
-import { useEffect, useState } from "react";
+import { getLoggedUser } from "../../services/user";
+import { useEffect, useInsertionEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { render } from "react-dom";
 
 function Movie() {
     const { id } = useParams() as { id: string };
@@ -23,6 +22,7 @@ function Movie() {
     const [averageRating, setAverageRating] = useState(0);
     const [showRatingButtons, setShowRatingButtons] = useState(false);
     const [showReviewInput, setShowReviewInput] = useState(false);
+    const [user, setUser] = useState({} as any);
     const [reviews, setReviews] = useState([] as any);
     const [loading, setLoading] = useState(true);
 
@@ -48,6 +48,44 @@ function Movie() {
             }
         }
 
+        const getRating = async () => {
+            try {
+                const response = await getMovieRating(id);
+                setRate(response.data);
+            } catch (error) {
+                console.error('Error fetching rating data:', error);
+            }
+        }
+
+        const getUser = async () => {
+            try {
+                const response = await getLoggedUser();
+                setUser(response.data);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        }
+    
+        getMovie();
+        getWatched();
+        getRating();
+        getUser();
+      }, [id]);
+
+      useEffect(() => {
+        const getReview = async () => {
+            try {
+                const response = await getReviews(id);
+                setReviews(response.data);
+            } catch (error) {
+                console.error('Error fetching review data:', error);
+            }
+        }
+
+        getReview();
+      }, [reviews]);
+
+      useEffect(() => {
         const getAverageRating = async () => {
             try {
                 const response = await getMovieAverageRating(id);
@@ -58,30 +96,9 @@ function Movie() {
             }
         }
 
-        const getRating = async () => {
-            try {
-                const response = await getMovieRating(id);
-                setRate(response.data);
-            } catch (error) {
-                console.error('Error fetching rating data:', error);
-            }
-        }
-
-        const getReview = async () => {
-            try {
-                const response = await getReviews(id);
-                setReviews(response.data);
-            } catch (error) {
-                console.error('Error fetching review data:', error);
-            }
-        }
-    
-        getMovie();
-        getWatched();
         getAverageRating();
-        getRating();
-        getReview();
-      }, [loading, id, rate]);
+      }, [rate]);
+
 
     function renderRatingButtons() {
         const ratings = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -139,7 +156,7 @@ function Movie() {
         );
     }
 
-    function renderNames(names = ["Timothée Chalamet", "Zendaya", "Rebecca Ferguson"]) {
+    function renderNames(names) {
         return names.map((name, index) => {
             return (
                 <>
@@ -185,7 +202,7 @@ function Movie() {
         setShowRatingButtons(!showRatingButtons);
     }
 
-    async function handleRatingClick(rating: number) {
+    function handleRatingClick(rating: number) {
         createRating(id, rating);
         setRate(rating);
         setShowRatingButtons(!showRatingButtons);
@@ -195,10 +212,15 @@ function Movie() {
         setShowReviewInput(!showReviewInput);
     }
 
-    async function handleReviewSubmit() {
-        const review = (document.getElementById('input-review') as HTMLInputElement).value;
-        createReview(id, review);
-        setReviews([...reviews, {review}]);
+    function handleReviewSubmit() {
+        const reviewText = (document.getElementById('input-review') as HTMLInputElement).value;
+        createReview(id, reviewText);
+        const userReview = reviews.filter((review) => {
+            return review.user.id === user.id;
+        })
+        if (userReview.length === 0) {
+            setReviews([...reviews, {review: reviewText, user: user}]);
+        }
         setShowReviewInput(!showReviewInput);
     }
 
@@ -210,7 +232,8 @@ function Movie() {
         return reviews.map((review, index) => {
             return (
                 <div key={index} className="review">
-                    <text>{review.review}</text>
+                    <p>{review.review}</p>
+                    <p className="user-name">{review.user.name}</p>
                 </div>
             );
         });
@@ -229,12 +252,12 @@ function Movie() {
                     <div className="right-side">
                         <div className='buttons-container'>
                             <button className="watched" onClick={() => handleWatchedClick()}>
-                                <img src={(!loading && watched) ? checkedBox : checkBox}></img>
-                                <text>Watched</text>
+                                <img src={watched ? checkedBox : checkBox}></img>
+                                <text>Assistido</text>
                             </button>
                             <button className="rate" onClick={() => handleRateClick()}>
                                 <img src={rate === -1 ? star : yellowStar}></img>
-                                <text>{rate === -1 ? 'Rate' : rate}</text>
+                                <text>{rate === -1 ? 'Avaliar' : rate}</text>
                             </button>
                             <button className="rating">
                                 <img src={rateStar}></img>
@@ -253,7 +276,7 @@ function Movie() {
                 <div className="movie-info">
                     <div className='genre'>
                         <div className="h5-container">
-                            <h5>Genre</h5>
+                            <h5>Gênero</h5>
                         </div>
                         <div className="genre-buttons">
                             {renderGenreButtons()}
@@ -261,31 +284,31 @@ function Movie() {
                     </div>
                     <div className='plot'>
                         <div className="h5-container">
-                            <h5>Plot</h5>
+                            <h5>Enredo</h5>
                         </div>
                         {renderPlot()}
                     </div>
                     <div className="director">
                         <div className="h5-container">
-                            <h5>Director</h5>
+                            <h5>Direção</h5>
                         </div>
                         {renderDirector()}
                     </div>
                     <div className='writers'>
                         <div className="h5-container">
-                            <h5>Writers</h5>
+                            <h5>Roteiro</h5>
                         </div>
                         <div className="names-text">{!loading && renderNames(movie.writers)}</div>
                     </div>
                     <div className='stars'>
                         <div className="h5-container">
-                            <h5>Stars</h5>
+                            <h5>Elenco</h5>
                         </div>
                         <div className="names-text">{!loading && renderNames(movie.stars)}</div>
                     </div>
                     <div className="awards">
                         <div className="h5-container">
-                            <h5>Providers</h5>
+                            <h5>Onde Assistir?</h5>
                         </div>
                         <div className="names-text">{!loading && renderNames(movie.providers)}</div>
                     </div>

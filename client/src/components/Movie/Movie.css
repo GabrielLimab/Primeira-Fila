@@ -42,6 +42,17 @@ h2   {
         padding: 10px;
         border-radius: 10px;
     }
+
+    .review {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .user-name {
+        font-size: 12px;
+        align-self: flex-end;
+    }
 }
 
 .small-info {
@@ -117,7 +128,7 @@ h2   {
 
     img {
         overflow: hidden;
-        height: 490px;
+        object-fit: cover;
     }
 
     .movie-backdrop {
@@ -135,7 +146,7 @@ h2   {
     gap: 20px;
 
     .h5-container {
-        width: 100px;
+        width: 150px;
     }
 
     text {
@@ -189,7 +200,7 @@ h2   {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 75px;
+        gap: 100px;
         
         .plot-text {
             text {

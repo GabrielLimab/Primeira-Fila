@@ -60,7 +60,7 @@ class MovieRepositoryClass {
   }
 
   async getMovieDetails(movieId: string) {
-    const movieDetails = await api.get(`/movie/${movieId}`).then(
+    const movieDetails = await api.get(`/movie/${movieId}?language=pt-BR`).then(
       (response) => {
         return response.data;
       }
@@ -75,7 +75,7 @@ class MovieRepositoryClass {
   }
 
   async getMovieCredits(movieId: string) {
-    const movieCredits = await api.get(`/movie/${movieId}/credits`).then(
+    const movieCredits = await api.get(`/movie/${movieId}/credits?language=pt-BR`).then(
       (response) => {
         return response.data;
       }
@@ -90,7 +90,7 @@ class MovieRepositoryClass {
   }
 
   async getMovieProviders(movieId: string) {
-    const movieProviders = await api.get(`/movie/${movieId}/watch/providers`).then(
+    const movieProviders = await api.get(`/movie/${movieId}/watch/providers?language=pt-BR`).then(
       (response) => {
         return response.data;
       }

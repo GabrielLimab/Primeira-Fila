@@ -230,7 +230,15 @@ class MovieServiceClass {
         review  : {
           not: null
         }
-      }
+      },
+      select: {
+        review: true,
+        user: {
+          select: {
+            name: true
+          }
+        }
+      } 
     });
 
     return reviews;
