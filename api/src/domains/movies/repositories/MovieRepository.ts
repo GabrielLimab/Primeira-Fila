@@ -13,7 +13,7 @@ class MovieRepositoryClass {
           throw error.response.data;
         }
     });
-
+    
     return forYouMovies;
   }
 
@@ -48,7 +48,7 @@ class MovieRepositoryClass {
   }
 
   async getMovieDetails(movieId: number) {
-    const movieDetails = await MovieAPI.get(`/movie/${movieId}`).then(
+    const movieDetails = await MovieAPI.get(`/movie/${movieId}?language=pt-BR`).then(
       (response) => {
         return response.data;
       }
@@ -63,7 +63,7 @@ class MovieRepositoryClass {
   }
 
   async getMovieCredits(movieId: number) {
-    const movieCredits = await MovieAPI.get(`/movie/${movieId}/credits`).then(
+    const movieCredits = await MovieAPI.get(`/movie/${movieId}/credits?language=pt-BR`).then(
       (response) => {
         return response.data;
       }
@@ -78,7 +78,7 @@ class MovieRepositoryClass {
   }
 
   async getMovieProviders(movieId: number) {
-    const movieProviders = await MovieAPI.get(`/movie/${movieId}/watch/providers`).then(
+    const movieProviders = await MovieAPI.get(`/movie/${movieId}/watch/providers?language=pt-BR`).then(
       (response) => {
         return response.data;
       }

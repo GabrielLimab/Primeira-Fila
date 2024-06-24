@@ -13,7 +13,7 @@ class MovieServiceClass {
     }
   
     const forYouMovies = await MovieRepository.getForYouMovies(userTopRatedMovie.movieId);
-
+    
     const forYouMoviesCards = forYouMovies.map((movie: { id: number; title: string; poster_path: string; vote_average: number; }) => {
       // const movieRating = RatingService.getRating(movie.id);
 
@@ -75,7 +75,10 @@ class MovieServiceClass {
     const writers = movieCredits.crew.filter((crewMember: { known_for_department: string }) => crewMember.known_for_department === "Writing");
     const writersNames = writers.map((writer: { name: string }) => writer.name);
 
-    const providers = movieProviders.results.BR.flatrate.map((provider: { provider_name: string }) => provider.provider_name);
+    let providers = [];
+    if (movieProviders.results.BR) {
+      providers = movieProviders.results.BR.flatrate?.map((provider: { provider_name: string }) => provider.provider_name);
+    }
 
     const movieInfo = {
       "genres": movieDetails.genres.map((genre: { name: string }) => genre.name),
@@ -87,13 +90,12 @@ class MovieServiceClass {
       "runtime": movieDetails.runtime,
       "title": movieDetails.title,
       "stars": stars.map((actor: { name: string }) => actor.name),
-      "director": directorsNames,
+      "director": directorsNames[0],
       "writers": writersNames,
       "providers": providers
     }
-
     return movieInfo;
-  }
+  } 
 
   async getMovieByName(movieName: string) {
     const movies = await MovieRepository.getMovieByName(movieName);
@@ -121,153 +123,6 @@ class MovieServiceClass {
     })
     return moviesInfo;
   }
-
-  async createRating(id: number, rating: number, userId: string) {
-    const existentRating = await prisma.rating.findFirst({
-      where: {
-        movieId: id,
-        userId: userId
-      }
-    });
-
-    if (existentRating) {
-      await prisma.rating.update({
-        where: {
-          id: existentRating.id
-        },
-        data: {
-          rating: rating
-        }
-      });
-
-      return existentRating;
-    }
-
-    const createdRating = await prisma.rating.create({
-      data: {
-        rating: rating,
-        movieId: id,
-        user: {
-          connect: {
-            id: userId
-          }
-        }
-      }
-    });
-
-    return createdRating;
-  }
-
-  async getRating(id: number) {
-    const rating = await MovieRepository.getMovieDetails(id);
-
-    const apiRating = rating.vote_average;
-
-    const ratings = await prisma.rating.findMany({
-      where: {
-        movieId: id,
-        rating: {
-          not: null
-        }
-      }
-    });
-    
-    if (ratings.length === 0) {
-      return apiRating;
-    }
-
-    const sum = ratings.reduce((acc, rating) => acc + rating.rating!, 0); 
-
-    const average = (sum + apiRating) / (ratings.length + 1);
-
-    return average;
-  }
-
-  async createReview(id: number, review: string, userId: string) {
-    const existentRating = await prisma.rating.findFirst({
-      where: {
-        movieId: id,
-        userId: userId
-      }
-    });
-
-    if (existentRating) {
-      await prisma.rating.update({
-        where: {
-          id: existentRating.id
-        },
-        data: {
-          review: review
-        }
-      });
-
-      return existentRating;
-    }
-
-    const createdRating = await prisma.rating.create({
-      data: {
-        review: review,
-        movieId: id,
-        user: {
-          connect: {
-            id: userId
-          }
-        }
-      }
-    });
-
-    return createdRating;
-  }
-
-  async getReviews(id: number) {
-    const reviews = await prisma.rating.findMany({
-      where: {
-        movieId: id,
-        rating: {
-          not: null
-        }
-      }
-    });
-
-    return reviews;
-  }
-
-  async watchedMovie(id: number, userId: string) {
-    const existentRating = await prisma.rating.findFirst({
-      where: {
-        movieId: id,
-        userId: userId
-      }
-    });
-
-    if (existentRating) {
-      await prisma.rating.update({
-        where: {
-          id: existentRating.id
-        },
-        data: {
-          watched: true
-        }
-      });
-
-      return existentRating;
-    }
-
-    const createdRating = await prisma.rating.create({
-      data: {
-        watched: true,
-        movieId: id,
-        user: {
-          connect: {
-            id: userId
-          }
-        }
-      }
-    });
-
-    return createdRating;
-  }
-
 }
 
 export const MovieService = new MovieServiceClass();

@@ -49,7 +49,7 @@ export const UserInfo = styled.div`
 
 export const UserInfoCard = styled.div`
     display: grid;
-    gap: 14px;
+    gap: 0px;
 `
 
 export const InfoTitle = styled.h2`
@@ -70,7 +70,7 @@ export const InfoTagsContainer = styled.div`
 export const InfoTag = styled.span`
     background-color: #A3A3A326;
     color: #C3C3C3;    
-    padding: 3.5px 18px;
+    padding: 8px 18px;
     border-radius: 45px;
     display: inline-block;
     font-size: 16px;

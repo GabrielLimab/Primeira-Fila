@@ -43,7 +43,7 @@ class RatingServiceClass {
     return createdRating;
   }
 
-  async getUserRating(movieId: number, userId: string) {
+  async getRating(movieId: number, userId: string) {
     const rating = await prisma.rating.findFirst({
       where: {
         movieId: movieId,
@@ -51,7 +51,11 @@ class RatingServiceClass {
       }
     });
 
-    return rating;
+    if (rating === null || rating.rating === null) {
+      return -1;
+    }
+
+    return rating.rating;
   }
 
   async getUserTopRatedMovie(userId: string) {
@@ -70,7 +74,7 @@ class RatingServiceClass {
     return topRating;
   }
   
-  async getRating(movieId: number) {
+  async getAverageRating(movieId: number) {
     const rating = await api.get(`/movie/${movieId}`).then(
       (response) => {
         return response.data;
@@ -94,14 +98,20 @@ class RatingServiceClass {
     });
     
     if (ratings.length === 0) {
-      return apiRating;
+      return {
+        "average": apiRating,
+        "count": rating.vote_count
+      };
     }
 
     const sum = ratings.reduce((acc, rating) => acc + (rating.rating || 0), 0); 
 
     const average = (sum + apiRating) / (ratings.length + 1);
 
-    return average;
+    return {
+      "average": average,
+      "count": ratings.length + rating.vote_count
+    };
   }
 
   async getReviews(movieId: number) {
@@ -111,21 +121,48 @@ class RatingServiceClass {
         review: {
           not: null
         }
-      }
+      },
+      select: {
+        review: true,
+        rating: true,
+        user: {
+          select: {
+            name: true
+          }
+        }
+      } 
     });
 
     return reviews;
   }
 
-  async getWatched(movieId: number) {
-    const watchedMovies = await prisma.rating.findMany({
+  async getWatchedMovie(movieId: number, userId: string) {
+    const watchedMovie = await prisma.rating.findFirst({
       where: {
         movieId: movieId,
-        watched: true
+        userId: userId
       }
     });
 
-    return watchedMovies;
+    if (!watchedMovie) {
+      return false;
+    }
+
+    return watchedMovie.watched;
+  }
+
+  async getRatingByUser(userId: string) {
+    console.log("ENTROUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUu")
+    const ratings = await prisma.rating.findMany({
+      where: {
+        userId: userId,
+        rating: {
+          not: null
+        }
+      }
+    });
+
+    return ratings;
   }
 }
 export const RatingService = new RatingServiceClass();
