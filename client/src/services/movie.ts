@@ -126,7 +126,7 @@ export const getReviewsByUser = async () => {
 export const getMovieByName = async (movieName: string) => {
     try {
         console.log("Chegou aqui")
-        const response = await api.get(`/movies/${movieName}`) as MovieProps[];
+        const response = await api.get(`/movies/search/${movieName}`);
         return response;
     } catch (error) {
         console.error('Error fetching movies data:', error);

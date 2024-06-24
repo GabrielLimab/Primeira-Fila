@@ -91,6 +91,21 @@ class MovieRepositoryClass {
 
     return movieProviders;
   }
+
+  async getMovieByName(movieName: string) {
+    const response = await MovieAPI.get(`/search/movie?query=${movieName}`).then(
+      (response) => {
+        return response.data.results;
+      }
+    ).catch(
+      (error: AxiosError) => {
+        if (error.response) {
+          throw error.response.data;
+        }
+    });
+
+    return response;
+  }
 }
 
 export const MovieRepository = new MovieRepositoryClass();

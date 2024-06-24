@@ -53,4 +53,15 @@ router.get('/:id',
   },
 );
 
+router.get('/search/:name', 
+  verifyJWT,
+  async(req: Request, res: Response, next:NextFunction) => {  
+    try {
+      const movies = await MovieService.getMovieByName(req.params.name);
+      res.status(statusCodes.SUCCESS).json(movies);
+    } catch (error) { 
+      next(error);
+    }
+  },
+);
 

@@ -20,7 +20,7 @@ const SearchPage = () => {
         const searchResult = async () => {
           try {
             const moviesResponse = await getMovie(searchTerm);
-            setMovies(moviesResponse);
+            setMovies(moviesResponse.data);
             console.log("Resposta da API:", moviesResponse);
           } catch (error) {
             console.error("Erro ao buscar filmes:", error);
@@ -125,12 +125,6 @@ const SearchPage = () => {
                                               <InfoTag>Fantasia</InfoTag>
                                           </ItemTags>
                                           <ItemDescription>{movie.overview}</ItemDescription>
-                                          <ItemOtherInformation>
-                                              <ItemOtherInformationTitle>Director:</ItemOtherInformationTitle><ItemOtherInformationContent>Dony Dunn</ItemOtherInformationContent>
-                                          </ItemOtherInformation>
-                                          <ItemOtherInformation>
-                                              <ItemOtherInformationTitle>Stars:</ItemOtherInformationTitle><ItemOtherInformationContent>Emilia Clarke, Peter Dinklage, Kit Harington</ItemOtherInformationContent>
-                                          </ItemOtherInformation>
                                           <ItemOtherInformation>
                                               <ItemOtherInformationTitle>Votes:</ItemOtherInformationTitle><ItemOtherInformationContent>{movie.vote_count}</ItemOtherInformationContent>
                                           </ItemOtherInformation>
