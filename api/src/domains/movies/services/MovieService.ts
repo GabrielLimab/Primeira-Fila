@@ -20,7 +20,7 @@ class MovieServiceClass {
         "id": movie.id,
         "title": movie.title,
         "poster_path": movie.poster_path,
-        "rating": movie.vote_average
+        "rating": movie.vote_average.toFixed(1)
       }
     });
 
@@ -36,7 +36,7 @@ class MovieServiceClass {
         "id": movie.id,
         "title": movie.title,
         "poster_path": movie.poster_path,
-        "rating": movie.vote_average
+        "rating": movie.vote_average.toFixed(1)
       }
     });
 
@@ -53,7 +53,7 @@ class MovieServiceClass {
         "id": movie.id,
         "title": movie.title,
         "poster_path": movie.poster_path,
-        "rating": movie.vote_average
+        "rating": movie.vote_average.toFixed(1)
       }
     });
 

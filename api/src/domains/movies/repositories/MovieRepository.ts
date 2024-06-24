@@ -5,7 +5,7 @@ class MovieRepositoryClass {
   async getForYouMovies(movieId: number) {
     const forYouMovies = await MovieAPI.get(`/movie/${movieId}/recommendations`).then(
       (response) => {
-        return response.data;
+        return response.data.results;
       }
     ).catch(
       (error: AxiosError) => {

@@ -7,15 +7,15 @@ const Home = () => {
     <div className="mainContainer">
       <div className="background"></div>
       <div className="foreground">
-        <div className="card-section-container">
+        <div className="card-sections">
           <CardSection
             title={"Principais escolhas pra você"}
             subtitle={"Séries e filmes que você vai gostar"}
             type={"for-you"}
           />
           <CardSection
-            title={"Em alta"}
-            subtitle={"Os filmes mais populares da semana"}
+            title={"Melhores filmes"}
+            subtitle={"Os filmes mais bem avaliados de todos os tempos"}
             type={"top-rated"}
           />
           <CardSection

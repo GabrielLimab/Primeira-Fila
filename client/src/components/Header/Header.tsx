@@ -17,9 +17,8 @@ import {
   SearchInput,
   StyledLink,
   UserIcon,
-  VectorIcon
-} from './Header.style';
-
+  VectorIcon,
+} from "./Header.style";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -59,8 +58,8 @@ const Header = () => {
           <StyledLink to="/usuario" className="ok">
             <UserIcon src={user} alt="user" />
             <RightButtonsText>Usuário</RightButtonsText>
-            <button onClick={handleLogout}>Logout</button>
           </StyledLink>
+          <button onClick={handleLogout}>Logout</button>
         </RightButtons>
       </HeaderContent>
     </HeaderContainer>

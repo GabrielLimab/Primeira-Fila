@@ -1,6 +1,5 @@
 .card-section-container {
   color: #c3c3c3;
-  box-sizing: border-box;
 }
 
 .card-section-top {
@@ -74,10 +73,11 @@
   cursor: default;
 }
 
-.card-section {
+.cards {
   display: flex;
   gap: 1em;
   overflow-x: hidden;
   flex-direction: row;
   padding-bottom: 1em;
+  
 }
