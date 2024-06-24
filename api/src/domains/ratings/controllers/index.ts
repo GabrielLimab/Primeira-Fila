@@ -75,3 +75,15 @@ router.get('/:id/average-rating',
     }
   }
 );
+
+router.get('/:id/watched',
+  verifyJWT,
+  async(req: Request, res: Response, next:NextFunction) => {
+    try {
+      const rating = await RatingService.getWatchedMovie(parseInt(req.params.id), req.body.watched);
+      res.status(statusCodes.SUCCESS).json(rating);
+    } catch (error) {
+      next(error);
+    }
+  }
+);

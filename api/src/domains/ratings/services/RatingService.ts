@@ -135,15 +135,19 @@ class RatingServiceClass {
     return reviews;
   }
 
-  async getWatched(movieId: number) {
-    const watchedMovies = await prisma.rating.findMany({
+  async getWatchedMovie(movieId: number, userId: string) {
+    const watchedMovie = await prisma.rating.findFirst({
       where: {
         movieId: movieId,
-        watched: true
+        userId: userId
       }
     });
 
-    return watchedMovies;
+    if (!watchedMovie) {
+      return false;
+    }
+
+    return watchedMovie.watched;
   }
 }
 export const RatingService = new RatingServiceClass();
