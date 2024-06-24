@@ -1,6 +1,5 @@
 import {
   ButtonContainer,
-  Dot,
   FollowButtonContainer,
   InfoTag,
   InfoTagsContainer,
@@ -8,13 +7,9 @@ import {
   ReviewButtons,
   ReviewCard,
   ReviewContent,
-  ReviewDate,
   ReviewHeader,
   ReviewMark,
   ReviewText,
-  ReviewTitle,
-  ReviewUser,
-  ReviewUserAndDate,
   Reviews,
   UserImage,
   UserInfo,
@@ -132,7 +127,7 @@ const UserPage = () => {
       </ReviewHeader>
       <Reviews>
         {reviews
-          .map((review) => (
+          .map((review: any) => (
             <ReviewCard>
               <ReviewContent>
                 <ReviewMark>

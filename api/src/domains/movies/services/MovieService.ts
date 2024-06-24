@@ -114,6 +114,7 @@ class MovieServiceClass {
 
     const moviesInfo = movies.map((movie) => {
       return {
+        "id": movie.id,
         "title": movie.title,
         "overview": movie.overview,
         "release_date": movie.release_date,
