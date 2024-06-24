@@ -12,7 +12,7 @@ class MovieServiceClass {
     }
   
     const forYouMovies = await MovieRepository.getForYouMovies(userTopRatedMovie.movieId);
-
+    
     const forYouMoviesCards = forYouMovies.map((movie: { id: number; title: string; poster_path: string; vote_average: number; }) => {
       // const movieRating = RatingService.getRating(movie.id);
 

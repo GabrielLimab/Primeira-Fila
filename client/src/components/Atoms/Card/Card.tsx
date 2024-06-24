@@ -4,17 +4,19 @@ import play from "../../../assets/play.svg";
 import info from "../../../assets/info.svg";
 import bookmark from "../../../assets/bookmark.svg";
 import "./Card.css";
+import { Link } from "react-router-dom";
 
 interface CardProps {
+  movieId: number;
   title: string;
   poster_path: string;
   rate: number;
 }
 
-function Card({ title, poster_path, rate }: CardProps) {
+function Card({ movieId, title, poster_path, rate }: CardProps) {
   const BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500";
   return (
-    <div className="card">
+    <Link to={`/movies/${movieId}`} className="card">
       <div className="imageContainer">
         <img
           src={BASE_IMAGE_URL + poster_path}
@@ -41,7 +43,7 @@ function Card({ title, poster_path, rate }: CardProps) {
           Resenhas
         </button>
       </div>
-    </div>
+    </Link>
   );
 }
 
