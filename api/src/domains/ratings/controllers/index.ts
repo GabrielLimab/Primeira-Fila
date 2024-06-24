@@ -52,7 +52,7 @@ router.get('/:id/reviews',
   },
 );
 
-router.get('/user/reviews',
+router.get('/users/user/reviews',
     verifyJWT,
     async(req: Request, res: Response, next:NextFunction) => {
       try {
@@ -68,7 +68,7 @@ router.get('/:id/rating',
   verifyJWT,
   async(req: Request, res: Response, next:NextFunction) => {
     try {
-      const rating = await RatingService.getRating(parseInt(req.params.id), req.userId!);
+        const rating = await RatingService.getRating(parseInt(req.params.id), req.userId!);
       res.status(statusCodes.SUCCESS).json(rating);
     } catch (error) {
       next(error);
@@ -80,7 +80,7 @@ router.get('/:id/average-rating',
   verifyJWT,
   async(req: Request, res: Response, next:NextFunction) => {
     try {
-      const rating = await RatingService.getAverageRating(parseInt(req.params.id));
+        const rating = await RatingService.getAverageRating(parseInt(req.params.id));
       res.status(statusCodes.SUCCESS).json(rating);
     } catch (error) {
       next(error);
@@ -92,7 +92,7 @@ router.get('/:id/watched',
   verifyJWT,
   async(req: Request, res: Response, next:NextFunction) => {
     try {
-      const rating = await RatingService.getWatchedMovie(parseInt(req.params.id), req.body.watched);
+        const rating = await RatingService.getWatchedMovie(parseInt(req.params.id), req.body.watched);
       res.status(statusCodes.SUCCESS).json(rating);
     } catch (error) {
       next(error);

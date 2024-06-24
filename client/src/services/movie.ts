@@ -115,7 +115,7 @@ export const getReviews = async (id: string) => {
 
 export const getReviewsByUser = async () => {
     try {
-        const response = await api.get(`/ratings/user/reviews`);
+        const response = await api.get(`/ratings/users/user/reviews`);
         return response;
     } catch (error) {
         console.error('Error fetching movies data:', error);

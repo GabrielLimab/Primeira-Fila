@@ -152,6 +152,7 @@ class RatingServiceClass {
   }
 
   async getRatingByUser(userId: string) {
+    console.log("ENTROUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUu")
     const ratings = await prisma.rating.findMany({
       where: {
         userId: userId,

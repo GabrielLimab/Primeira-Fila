@@ -40,7 +40,8 @@ const UserPage = () => {
     const searchResult = async () => {
       try {
         const reviewsResponse = await getReviewsByUser();
-        setReviews(reviewsResponse);
+        console.log(reviewsResponse);
+        setReviews(reviewsResponse.data);
       } catch (error) {
         console.error("Erro ao buscar filmes:", error);
       }
@@ -130,72 +131,28 @@ const UserPage = () => {
         </ButtonContainer>
       </ReviewHeader>
       <Reviews>
-        <ReviewCard>
-          <ReviewContent>
-            <ReviewMark>
-              <img src={StarIcon} alt="StarIcon" />
-              <span style={{ color: "yellow" }}>10</span>
-              <span>/10</span>
-            </ReviewMark>
-            <ReviewTitle>
-              One Of The Greatest Sequel Ever Made, Dune: Part Two Was Easily
-              The Best Films Of The Year So Far
-            </ReviewTitle>
-            <ReviewUserAndDate>
-              <ReviewUser>johnDoe</ReviewUser>
-              <Dot />
-              <ReviewDate>20 Feb 2024</ReviewDate>
-            </ReviewUserAndDate>
-            <ReviewText>
-              In the quiet embrace of ink and page, a story unfolded, timeless
-              and sage, through the lens of a filmmaker's artistry, its essence
-              soared, a masterpiece for all to see, i think Denis Villeneuve has
-              just made the most visually stunning epic story of a movie that's
-              ever been made, the most powerful story of a movie ever been told
-              in the last 20 years, there has been no movies with this scale
-              resulting in not just a piece of a film no more but a piece of
-              art, it's what Infinity War and Endgame looks like
-            </ReviewText>
-            <ReviewButtons>
-              <ButtonContainer>
-                <img src={LikeIcon} alt="LikeIcon" />
-              </ButtonContainer>
-              <ButtonContainer>
-                <img src={DislikeIcon} alt="DislikeIcon" />
-              </ButtonContainer>
-            </ReviewButtons>
-          </ReviewContent>
-        </ReviewCard>
-        {reviews.map((review) => (
+        {reviews
+          .map((review) => (
             <ReviewCard>
-            <ReviewContent>
+              <ReviewContent>
                 <ReviewMark>
-                <img src={StarIcon} alt="StarIcon" />
-                <span style={{ color: "yellow" }}>{review.rating}</span>
-                <span>/10</span>
+                  <img src={StarIcon} alt="StarIcon" />
+                  <span style={{ color: "yellow" }}>{review.rating}</span>
+                  <span>/10</span>
                 </ReviewMark>
-                <ReviewTitle>
-                {review.title}
-                </ReviewTitle>
-                <ReviewUserAndDate>
-                <ReviewUser>{review.username}</ReviewUser>
-                <Dot />
-                <ReviewDate>{review.date}</ReviewDate>
-                </ReviewUserAndDate>
-                <ReviewText>
-                {review.content}
-                </ReviewText>
+                <ReviewText>{review.review}</ReviewText>
                 <ReviewButtons>
-                <ButtonContainer>
+                  <ButtonContainer>
                     <img src={LikeIcon} alt="LikeIcon" />
-                </ButtonContainer>
-                <ButtonContainer>
+                  </ButtonContainer>
+                  <ButtonContainer>
                     <img src={DislikeIcon} alt="DislikeIcon" />
-                </ButtonContainer>
+                  </ButtonContainer>
                 </ReviewButtons>
-            </ReviewContent>
+              </ReviewContent>
             </ReviewCard>
-        ))}
+          ))
+          .slice(0, 2)}
       </Reviews>
     </UserPageContainer>
   );

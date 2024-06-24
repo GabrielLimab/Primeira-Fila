@@ -25,7 +25,7 @@ const Review = ({ rating, movieName, name, content }: ReviewProps) => {
         <ReviewHeader>
           <ReviewTitle>{movieName}</ReviewTitle>
           <ReviewRating>
-            <StarIcon>⭐</StarIcon> {rating}/10
+            <StarIcon>⭐</StarIcon> {rating ? rating : "- "}/ 10
           </ReviewRating>
           <ReviewUsername>{name}</ReviewUsername>
         </ReviewHeader>
