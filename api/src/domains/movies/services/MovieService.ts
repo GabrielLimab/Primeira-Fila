@@ -1,3 +1,4 @@
+import { title } from "process";
 import prisma from "../../../../libs/prisma";
 import { RatingService } from "../../ratings/services/RatingService";
 import { MovieRepository } from "../repositories/MovieRepository";
@@ -92,6 +93,33 @@ class MovieServiceClass {
     }
 
     return movieInfo;
+  }
+
+  async getMovieByName(movieName: string) {
+    const movies = await MovieRepository.getMovieByName(movieName);
+
+    movies.sort((a, b) => {
+      if (a.vote_count > b.vote_count) {
+        return -1;
+      }
+      if (a.vote_count < b.vote_count) {
+        return 1;
+      }
+      return 0;
+    });
+
+    const moviesInfo = movies.map((movie) => {
+      return {
+        "title": movie.title,
+        "overview": movie.overview,
+        "release_date": movie.release_date,
+        "vote_average": movie.vote_average,
+        "vote_count": movie.vote_count,
+        "popularity": movie.popularity,
+        "poster_path": "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/" + movie.poster_path
+      };
+    })
+    return moviesInfo;
   }
 
   async createRating(id: number, rating: number, userId: string) {
