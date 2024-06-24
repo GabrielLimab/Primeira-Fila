@@ -100,6 +100,8 @@ class MovieServiceClass {
   async getMovieByName(movieName: string) {
     const movies = await MovieRepository.getMovieByName(movieName);
 
+    console.log(movies);
+
     movies.sort((a, b) => {
       if (a.vote_count > b.vote_count) {
         return -1;
