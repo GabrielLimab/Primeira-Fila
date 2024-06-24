@@ -100,3 +100,61 @@ História #8: Como usuário, gostaria de saber quais são os filmes mais bem ava
 - Tarefas e responsáveis:
     - Implementar sessão de filmes mais bem avaliados na página principal [Gabriel Teixeira]
     - Implementar a lógica para receber os filmes com maior nota média e adicionar à lista da sessão [Daniel]
+
+# Decisões arquitetônicas
+A escolha da estrutura arquitetônica é muito importante para o sucesso e a sustentabilidade do projeto. Dessa forma, a Arquitetura Hexagonal foi utilizada nesse projeto, com o objetivo de criar um sistema modular e desacoplado. Esse formato de organização promove uma separação clara entre a lógica de negócio e as interações externas (conexão com API, banco de dados, etc), facilitando a manutenção, a expansão e o teste do sistema.
+
+## Porque o sistema está adotando essa arquitetura?
+O sistema está usando essa arquitetura, pois ela traz vantagens relacionadas à sustentabilidade e escalabilidade do código. A proposta da Arquitetura Hexagonal possibilita com que a lógica de negócio seja implementada independentemente das dependências externas, como conexão ao banco de dados. Esse fato, torna a implementação das funcionalidades base da aplicação mais legível e modular,  por meio do baixo acoplamento, permitindo com que a troca de tecnologias externas mais flexível e fácil como, por exemplo, a troca de um banco de dados relacional para um não relacional ou a mudança do ORM (Object-Relational Mapping) utilizado do Prisma para o TypeORM.
+
+Além disso, essa arquitetura favorece a implementação de testes double, no qual irá simular as interfaces externas (adaptadores), sem que seja necessário realizar interações reais para que o sistema seja testado.
+
+## Quais são as portas e adaptadores? Qual o objetivo deles?
+As portas são responsáveis por definir os serviços necessários que o núcleo oferece ou requer, agindo como ponto de acesso através dos quais o núcleo da aplicação interage com o ambiente externo.
+No sistema Primeira Fila, as portas são representadas pelos arquivos presentes na pasta service de cada entidade no back-end. Por exemplo, em MovieService.ts  a função getNowPlayingMovies possui a porta de entrada para o ambiente externo quando faz a chamada MovieRepository.getNowPlayingMovies, na qual faz a requisição para API que busca pelos filmes em cartaz. Por outro lado, os arquivos nas pastas repositories representam os adaptadores da aplicação, nos quais, efetivamente, implementam as chamadas para uma API externa. Essa estrutura converte os dados retornados da API para o formato que as funções do service podem consumir.
+
+Portanto, podemos definir os adaptadores como responsáveis por pegar as requisições do serviço e transformá-las em chamadas de API externas, além de tratar a resposta para que se encaixe no que o serviço espera. Dessa forma, é possível conectar o núcleo da aplicação com o ambiente externo, adaptando a entrada/saída de dados para um formato em que o domínio pode utilizar. Um exemplo de adaptador no sistema é o arquivo MovieAPI, por meio de chamadas do MovieAPI, os arquivos do service podem obter os dados vindos da API já tratados, com a utilização da biblioteca axios. Dessa maneira, as pastas services se abstém da implementação para se conectar com a API ou banco de dados, tornando o código mais flexível e modular.
+
+## Exemplos
+No diagrama a seguir, é possível identificar a organização de arquivos no backend na Arquitetura Hexagonal. O exemplo em questão trata da implementação das operações da entidade Movie e o consumo da API externa e as operações no banco de dados
+![BackendDiagram](./images/backendDiagram.png)
+
+###Repository
+Responsável por interagir com a camada de persistência de dados, como bancos de dados, realizando operações de CRUD.
+![Repository](./images/repository.png)
+###Service
+Contém a lógica de negócios da aplicação, orquestrando as operações e intermediando entre os repositórios e os controladores.
+![Service](./images/service.png)
+###Controller 
+Lida com a interface de entrada, recebendo e processando as requisições do usuário e direcionando-as para os serviços apropriados.
+![Controller](./images/controller.png)
+
+Segue mais uma representação da arquitetura implementada com o exemplo da entidade Movies.
+
++-----------------+                             Front-End
+|  Controller     |                  +-----------------------------+
+|-----------------|  <-------------- |api.get('/movies/top-rated/')|
+| -  MovieService |		     +-----------------------------+
++-----------------+
+          |
+          |
+          v
++------------------------------------+
+|             MovieService           |
+|------------------------------------|
+| - getNowPlayingMovies()            |
+|------------------------------------|
+| - movieAPI: MovieAPI               |
+| - movieRepository: MovieRepository |
++------------------------------------+
+          |
+          |
+  +-------+------------------+
+  |                          |
+  v                          v
++------------------+   +--------------------------+
+|    MovieAPI      |   |      MovieRepository     |
+|------------------+   |--------------------------|
+| - getMovieDetails|   | - save(movie: Movie)     |
++-----------------+    | - find(movieId: string)  |
+                       +--------------------------+
