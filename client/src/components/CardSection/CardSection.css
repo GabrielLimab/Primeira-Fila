@@ -1,7 +1,6 @@
 .card-section-container {
-    padding: 2em; /* Add padding to the section */
-    color: white;
-    width: 100%;
+  color: #c3c3c3;
+  box-sizing: border-box;
 }
 
 .card-section-top {
@@ -10,13 +9,13 @@
   justify-content: space-between;
   align-items: center;
 }
-  
-.section-title{
-  font-size: 1.5em; /* Larger font size for the heading */
-  margin-bottom: 0.5em; /* Space below the heading */
+
+.section-title {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
   display: flex;
   align-items: center;
-  color: white; /* Altere a cor conforme necessário */
+  color: #c3c3c3;
   font-size: 1.5rem;
   text-decoration: none;
 }
@@ -26,14 +25,14 @@
 }
 
 .section-title::after {
-  content: '➔';
+  content: "➔";
   margin-left: 0.5em;
 }
 
 .section-subtitle {
-  font-size: 1em; /* Normal font size for the subheading */
-  margin-bottom: 1.5em; /* Space below the subheading */
-  color: #b0b0b0; /* Slightly lighter color for the subheading */
+  font-size: 1em;
+  margin-bottom: 1.5em;
+  color: #797979;
 }
 
 .carousel-controls {
@@ -43,9 +42,7 @@
 
 .prev,
 .next {
-  background: none;
   border: none;
-  cursor: pointer;
   color: #c3c3c3;
   background-color: #a3a3a326;
   border-radius: 50%;
@@ -66,167 +63,21 @@
 .next:hover {
   color: white;
   background-color: #a3a3a36f;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.prev:disabled:hover,
+.next:disabled:hover {
+  background-color: #a3a3a324;
+  color: #c3c3c360;
+  cursor: default;
 }
 
 .card-section {
   display: flex;
   gap: 1em;
   overflow-x: hidden;
-}
-
-.card {
-  width: 12.5em;
-  border-radius: 0.625em;
-  overflow: hidden;
-  background-color: #a3a3a315;
-  color: #c3c3c3;
-  display: flex;
-  flex-direction: column;
-  padding: 0.7em;
-  transition: transform 0.3s ease;
-  cursor: pointer;
-}
-
-.card:hover {
-  transform: scale(1.015);
-}
-
-.imageContainer {
-  position: relative;
-}
-
-.bookmark {
-  position: absolute;
-  top: 0em;
-  left: 0.625em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.movie-image {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.movie-details {
-  padding-top: 0.5em;
-}
-
-.movie-title {
-  font-size: 1.13em;
-  margin: 0.5em 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.movie-rating {
-  display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 0.5em;
-}
-
-.avg-rating {
-  display: flex;
-  align-items: flex-start;
-  margin-right: 0.5em;
-}
-
-.star-icon {
-  margin-right: 0.5em;
-}
-
-.user-rate {
-  display: flex;
-  align-items: flex-start;
-  margin-right: 0.5em;
-}
-
-.infoIcon {
-  display: flex;
-  align-items: flex-start;
-}
-
-.card-reviews-button {
-  width: 100%;
-  padding: 0.5em 0;
-  margin-top: 0.5em;
-  border: none;
-  border-radius: 0.5em;
-  background-color: #a3a3a315;
-  color: #c3c3c3;
-  font-size: 0.875em;
-  cursor: pointer;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  box-shadow: 0px 1px 2px 0px #ffffff14 inset;
-}
-
-.play-icon {
-  margin-right: 0.5em;
-  margin-left: 1em;
-}
-
-.card-reviews-button:hover {
-  background-color: #a3a3a315;
-}
-
-/* .prev {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #c3c3c3;
-  background-color: #A3A3A326;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-}
-
-.prev:disabled {
-  background-color: #a3a3a324;
-  color: #c3c3c360;
-}
-
-.prev:hover {
-  color: white;
-  background-color: #a3a3a36f;
-}
-
-.next {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #c3c3c3;
-  background-color: #A3A3A326;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-}
-
-.next:disabled {
-  background-color: #a3a3a324;
-  color: #c3c3c360;
-}
-
-.next:hover {
-  color: white;
-  background-color: #a3a3a36f;
-}
-  
-.card-section {
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  overflow-x: scroll;
   padding-bottom: 1em;
 }
-
-.card-section::-webkit-scrollbar {
-  display: none;
-}*/

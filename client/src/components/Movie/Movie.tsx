@@ -95,7 +95,6 @@ function Movie() {
             return;
         }
 
-        console.log(review);
     }
 
     return (

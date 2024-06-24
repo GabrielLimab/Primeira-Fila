@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import { login } from "../../services/authenticate";
+import { login } from "../../services/authenticate";
 import TextInput from "../Atoms/TextInput/TextInput";
 import Button from "../Atoms/Button/Button";
 import Socials from "../Atoms/Socials/Socials";
@@ -13,26 +13,26 @@ function Login({ setAuthMode }: LoginProps) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [error, setError] = useState("");
+  const [error, setError] = useState("");
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // setError("");
+    setError("");
 
-    // if (email === "" || password === "") {
-    //   setError("Fill in all inputs");
-    //   return;
-    // }
+    if (email === "" || password === "") {
+      setError("Fill in all inputs");
+      return;
+    }
 
-    // await login(email, password)
-    //   .catch((err) => {
-    //     setError(err);
-    //     console.log(error);
-    //     throw err;
-    //   })
-    //   .then(() => {
-    //      navigate("/home");
-    //   });
+    await login(email, password)
+      .catch((err) => {
+        setError(err);
+        console.log(error);
+        throw err;
+      })
+      .then(() => {
+        navigate("/home");
+      });
     localStorage.setItem("token", "success");
     navigate("/home");
   }

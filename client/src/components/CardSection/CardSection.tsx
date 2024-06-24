@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from "react";
 import { CardProps } from "../../types/CardProps";
 import Card from "../Atoms/Card/Card";
 import dot from "../../assets/dot.svg";
-import starWars from "../../assets/starwars.png";
 import "./CardSection.css";
 import {
   getNowPlayingMovies,
@@ -34,8 +33,12 @@ async function getCards(type: string) {
   return cards;
 }
 
-function renderCards(cards: CardProps[]) {
-  if (!cards) {
+function renderCards(
+  cards: any,
+  currentPage: number,
+  numberOfVisibleCards: number
+) {
+  if (cards.length === 0) {
     return (
       <div className="empty-card-section">
         <h1>No movies found</h1>
@@ -43,16 +46,21 @@ function renderCards(cards: CardProps[]) {
     );
   }
 
-  return cards.map((card: CardProps) => {
-    return (
-      <Card
-        key={card.title}
-        title={card.title}
-        poster_path={card.poster_path}
-        rate={card.rate}
-      />
-    );
-  });
+  return cards
+    .slice(
+      currentPage * numberOfVisibleCards,
+      (currentPage + 1) * numberOfVisibleCards
+    )
+    .map((card: CardProps) => {
+      return (
+        <Card
+          key={card.title}
+          title={card.title}
+          poster_path={card.poster_path}
+          rate={card.rate}
+        />
+      );
+    });
 }
 
 interface Card {
@@ -62,85 +70,31 @@ interface Card {
 }
 
 function CardSection({ title, subtitle, type }: SectionProps) {
-  const tempCards = [
-    {
-      id: "1",
-      title: "Star Wars",
-      poster_path: starWars,
-      rate: 8.7,
-    },
-    {
-      id: "2",
-      title: "Star Wars",
-      poster_path: starWars,
-      rate: 8.7,
-    },
-    {
-      id: "3",
-      title: "Star Wars",
-      poster_path: starWars,
-      rate: 8.7,
-    },
-    {
-      id: "4",
-      title: "Star Wars",
-      poster_path: starWars,
-      rate: 8.7,
-    },
-    {
-      id: "5",
-      title: "Star Wars",
-      poster_path: starWars,
-      rate: 8.7,
-    },
-    {
-      id: "6",
-      title: "Star Wars",
-      poster_path: starWars,
-      rate: 8.7,
-    },
-    {
-      id: "7",
-      title: "Star Wars",
-      poster_path: starWars,
-      rate: 8.7,
-    },
-    {
-      id: "8",
-      title: "Star Wars",
-      poster_path: starWars,
-      rate: 8.7,
-    },
-    {
-      id: "9",
-      title: "Star Wars",
-      poster_path: starWars,
-      rate: 8.7,
-    },
-    {
-      id: "10",
-      title: "Star Wars",
-      poster_path: starWars,
-      rate: 8.7,
-    },
-  ];
-
-  const [visibleCards, setVisibleCards] = useState(0);
-  const cardSectionRef = useRef<HTMLDivElement>(null);
-  const totalPages = Math.ceil(12.5 / visibleCards);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [numberOfVisibleCards, setnumberOfVisibleCards] = useState(1);
   const [cards, setCards] = useState<CardProps[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const cardSectionRef = useRef<HTMLDivElement>(null);
+  const totalPages = Math.ceil(cards.length / numberOfVisibleCards);
 
   useEffect(() => {
     const handleResize = () => {
       if (cardSectionRef.current) {
-        const cardWidth = 200; // largura do cartão (ajustar conforme necessário)
+        const cardWidth =
+          cardSectionRef.current.querySelector(".card")?.clientWidth || 140;
         const sectionWidth = cardSectionRef.current.offsetWidth;
-        setVisibleCards(Math.floor(sectionWidth / cardWidth));
+        console.log(
+          sectionWidth,
+          cardWidth,
+          Math.floor(sectionWidth / cardWidth)
+        );
+        if (cardWidth == 140) {
+          setnumberOfVisibleCards(numberOfVisibleCards - 1);
+        }
+        setnumberOfVisibleCards(Math.floor(sectionWidth / cardWidth));
       }
     };
     window.addEventListener("resize", handleResize);
-    handleResize(); // Chamada inicial para definir o número de cartões visíveis
+    handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -153,14 +107,14 @@ function CardSection({ title, subtitle, type }: SectionProps) {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
   };
 
-  // useEffect(() => {
-  //   const fetchCards = async () => {
-  //     const fetchedCards = await getCards(type);
-  //     setCards(fetchedCards);
-  //   };
+  useEffect(() => {
+    const fetchCards = async () => {
+      const fetchedCards = await getCards(type);
+      setCards(fetchedCards);
+    };
 
-  //   fetchCards();
-  // }, [type]);
+    fetchCards();
+  }, []);
 
   return (
     <div className="card-section-container">
@@ -183,7 +137,7 @@ function CardSection({ title, subtitle, type }: SectionProps) {
           <button
             className="next"
             onClick={handleNextClick}
-            disabled={currentPage === totalPages - 1}
+            disabled={currentPage === totalPages - 1 || totalPages === 1}
           >
             &gt;
           </button>
@@ -191,16 +145,7 @@ function CardSection({ title, subtitle, type }: SectionProps) {
       </div>
 
       <div className="card-section" ref={cardSectionRef}>
-        {tempCards
-          .slice(currentPage * visibleCards, (currentPage + 1) * visibleCards)
-          .map((card, index) => (
-            <Card
-              key={card.title}
-              title={card.title}
-              poster_path={card.poster_path}
-              rate={card.rate}
-            />
-          ))}
+        {renderCards(cards, currentPage, numberOfVisibleCards)}
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ model User {
 
 model Rating {
   id      String  @id @default(uuid())
-  movieId String
+  movieId Int
   rating  Int?
   review  String?
   watched Boolean @default(false)
