@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const UserPageContainer = styled.div`
-    background-color: #000000;
+    background-color: #1A1A1A;
     display: grid;
     justify-content: center;
     align-items: center;
@@ -67,7 +67,7 @@ export const InfoTagsContainer = styled.div`
     gap: 9px;
 `
 
-export const InfoTag = styled.span`;
+export const InfoTag = styled.span`
     background-color: #A3A3A326;
     color: #C3C3C3;    
     padding: 3.5px 18px;

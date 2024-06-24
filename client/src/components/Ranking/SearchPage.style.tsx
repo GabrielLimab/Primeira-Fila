@@ -5,7 +5,7 @@ export const SearchPageContainer = styled.div`
     justify-content: center;
     gap: 54px;
     align-items: center;
-    background-color: #000000;
+    background-color: #1A1A1A;
 `
 
 export const SearchHeader = styled.div`
@@ -83,7 +83,7 @@ export const SearchContentContainer = styled.div`
     justify-content: start;
     gap: 34px;
     align-items: center;
-    padding-top: 54px;
+    padding-top: 0px;
     padding-bottom: 54px;
 `
 
@@ -119,7 +119,20 @@ export const SearchItemsCard = styled.div`
     border-radius: 15px;
     width: 1137px;
     // height: 355px;
+    :hover {
+        background-color: #A3A3A30D;
+        border-radius: 15px;
+    }
 `
+
+export const InnerContent = styled.div`
+    position: relative;
+    pointer-events: all;
+`;
+
+export const NoPointerEventsWrapper = styled.div`
+    pointer-events: none;
+`;
 
 export const SearchItemsContent = styled.div`
     display: flex;
@@ -143,6 +156,7 @@ export const ItemTitleAndIcons = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* gap: 730px; */
 `
 
 export const ItemTitle = styled.span`
@@ -152,6 +166,7 @@ export const ItemTitle = styled.span`
     font-family: "Roboto", sans-serif;
     font-weight: 700;
     margin: 0;
+    max-width: 800px;
 ` 
 
 export const ReviewMark = styled.div`
@@ -200,7 +215,7 @@ export const ItemDescription = styled.span`
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     margin: 0;
-    max-width: 500px;
+    width: 952px;
 `
 
 export const ItemOtherInformation = styled.div`
