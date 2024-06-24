@@ -1,11 +1,10 @@
-import { Dot, InfoTag } from "../UserPage/UserPage.style";
-import { SearchPageContainer, SearchHeader, HeaderTitle, ButtonContainer, FirstTitle, MainTitle, SearchContent, SearchContentContainer, SearchItems, SearchItemsCard, SearchItemsContent, ItemYearDuration, ItemYear, ItemDescription, ItemOtherInformationTitle, ItemOtherInformationContent, ItemTags, ItemTitle, SearchItemsInfo, ItemOtherInformation, ItemTitleAndIcons, ReviewMark } from "./SearchPage.style";
-import GOT from "../../assets/GOT.svg";
-import StarIcon from "../../assets/StarIcon.png"
-import { useSearch } from "./SearchContext";
+import { useEffect, useState } from "react";
+import StarIcon from "../../assets/StarIcon.png";
 import { getMovieByName } from "../../services/movie";
 import { MovieProps } from "../../types/MovieProps";
-import { useEffect, useState } from "react";
+import { Dot, InfoTag } from "../UserPage/UserPage.style";
+import { useSearch } from "./SearchContext";
+import { ButtonContainer, FirstTitle, HeaderTitle, InnerContent, ItemDescription, ItemOtherInformation, ItemOtherInformationContent, ItemOtherInformationTitle, ItemTags, ItemTitle, ItemTitleAndIcons, ItemYear, ItemYearDuration, MainTitle, NoPointerEventsWrapper, ReviewMark, SearchContent, SearchContentContainer, SearchHeader, SearchItems, SearchItemsCard, SearchItemsContent, SearchItemsInfo, SearchPageContainer } from "./SearchPage.style";
 
 async function getMovie(movieName: string) {
     const response = await getMovieByName(movieName);
@@ -30,6 +29,48 @@ const SearchPage = () => {
     
         searchResult();
       }, [searchTerm]);
+
+      if(movies.length === 0) {
+        setMovies([{
+            title: "Game of Thrones",
+            overview: "Nine noble families fight for control over the lands of Westeros, while an ancient enemy returns after being dormant for millennia.",
+            release_date: "2011-04-17",
+            vote_average: 8.4,
+            vote_count: 14000,
+            popularity: 1000,
+            poster_path: "https://image.tmdb.org/t/p/w500/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg"
+        }, 
+        {
+           title: "The Imitation Game",
+            overview: "During World War II, the English mathematical genius Alan Turing tries to crack the German Enigma code with help from fellow mathematicians.",
+            release_date: "2014-11-14",
+            vote_average: 8,
+            vote_count: 10000,
+            popularity: 900,
+            poster_path: "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bwWCFjhwrs5my4FUoeWdTa2GYlB.jpg"
+        },
+        {
+          title: "Geralds Game",
+          overview: "A woman accidentally kills her husband during a kinky game. Handcuffed to her bed with no hope of rescue, she begins hearing voices and seeing strange visions.",
+          release_date: "2017-09-29",
+          vote_average: 6.6,
+          vote_count: 5000,
+          popularity: 800,
+          poster_path: "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/kYFyeWz6AfKq9e3PEY2GREZ39Ay.jpg"
+        },
+        {
+          title: "The Game",
+          overview: "After a wealthy banker is given an opportunity to participate in a mysterious game, his life is turned upside down when he becomes unable to distinguish between the game and reality.",
+          release_date: "1997-09-12",
+          vote_average: 7.8,
+          vote_count: 8000,
+          popularity: 700,
+          poster_path: "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/99SiLFwUfYObbUtgKWOKpAg4LlY.jpg"
+        },       
+      ]);
+    }
+
+    const BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500";
     
     return (
         <SearchPageContainer>
@@ -62,37 +103,41 @@ const SearchPage = () => {
                     <SearchItems>
                         {movies.map((movie: MovieProps) => (
                             <SearchItemsCard>
-                                <SearchItemsContent>
-                                    <img src={GOT} alt="GOT" height={194} width={126}/>
-                                    <SearchItemsInfo>
-                                        <ItemTitleAndIcons>
-                                            <ItemTitle>{movie.title}</ItemTitle>
-                                            <ReviewMark>
-                                                <img src={StarIcon} alt="StarIcon" width={24} height={24} style={{ paddingBottom: 3}}/>
-                                                <span style={{ color: 'yellow' }}>{movie.vote_average}</span>
-                                                <span>/10</span>
-                                            </ReviewMark>
-                                        </ItemTitleAndIcons>
-                                        <ItemYearDuration>
-                                            <ItemYear>{movie.release_date.slice(0,4)}</ItemYear>
-                                        </ItemYearDuration>
-                                        <ItemTags>
-                                            <InfoTag>Drama</InfoTag>
-                                            <InfoTag>Aventura</InfoTag>
-                                            <InfoTag>Fantasia</InfoTag>
-                                        </ItemTags>
-                                        <ItemDescription>{movie.overview}</ItemDescription>
-                                        <ItemOtherInformation>
-                                            <ItemOtherInformationTitle>Director:</ItemOtherInformationTitle><ItemOtherInformationContent>Dony Dunn</ItemOtherInformationContent>
-                                        </ItemOtherInformation>
-                                        <ItemOtherInformation>
-                                            <ItemOtherInformationTitle>Stars:</ItemOtherInformationTitle><ItemOtherInformationContent>Emilia Clarke, Peter Dinklage, Kit Harington</ItemOtherInformationContent>
-                                        </ItemOtherInformation>
-                                        <ItemOtherInformation>
-                                            <ItemOtherInformationTitle>Votes:</ItemOtherInformationTitle><ItemOtherInformationContent>{movie.vote_count}</ItemOtherInformationContent>
-                                        </ItemOtherInformation>
-                                    </SearchItemsInfo>
-                                </SearchItemsContent>
+                              <InnerContent>
+                                <NoPointerEventsWrapper>
+                                  <SearchItemsContent>
+                                      <img src={movie.poster_path} alt="moviePoster" height={194} width={126}/>
+                                      <SearchItemsInfo>
+                                          <ItemTitleAndIcons>
+                                              <ItemTitle>{movie.title}</ItemTitle>
+                                              <ReviewMark>
+                                                  <img src={StarIcon} alt="StarIcon" width={24} height={24} style={{ paddingBottom: 3}}/>
+                                                  <span style={{ color: 'yellow' }}>{movie.vote_average}</span>
+                                                  <span>/10</span>
+                                              </ReviewMark>
+                                          </ItemTitleAndIcons>
+                                          <ItemYearDuration>
+                                              <ItemYear>{movie.release_date.slice(0,4)}</ItemYear>
+                                          </ItemYearDuration>
+                                          <ItemTags>
+                                              <InfoTag>Drama</InfoTag>
+                                              <InfoTag>Aventura</InfoTag>
+                                              <InfoTag>Fantasia</InfoTag>
+                                          </ItemTags>
+                                          <ItemDescription>{movie.overview}</ItemDescription>
+                                          <ItemOtherInformation>
+                                              <ItemOtherInformationTitle>Director:</ItemOtherInformationTitle><ItemOtherInformationContent>Dony Dunn</ItemOtherInformationContent>
+                                          </ItemOtherInformation>
+                                          <ItemOtherInformation>
+                                              <ItemOtherInformationTitle>Stars:</ItemOtherInformationTitle><ItemOtherInformationContent>Emilia Clarke, Peter Dinklage, Kit Harington</ItemOtherInformationContent>
+                                          </ItemOtherInformation>
+                                          <ItemOtherInformation>
+                                              <ItemOtherInformationTitle>Votes:</ItemOtherInformationTitle><ItemOtherInformationContent>{movie.vote_count}</ItemOtherInformationContent>
+                                          </ItemOtherInformation>
+                                      </SearchItemsInfo>
+                                  </SearchItemsContent>
+                                </NoPointerEventsWrapper>
+                              </InnerContent>
                             </SearchItemsCard>
                         ))}
                     </SearchItems>
