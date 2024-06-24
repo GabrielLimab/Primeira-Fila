@@ -149,6 +149,19 @@ class RatingServiceClass {
 
     return watchedMovie.watched;
   }
+
+  async getRatingByUser(userId: string) {
+    const ratings = await prisma.rating.findMany({
+      where: {
+        userId: userId,
+        rating: {
+          not: null
+        }
+      }
+    });
+
+    return ratings;
+  }
 }
 export const RatingService = new RatingServiceClass();
 
