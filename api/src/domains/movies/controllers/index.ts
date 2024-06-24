@@ -70,7 +70,19 @@ router.get('/:id/rating',
   verifyJWT,
   async(req: Request, res: Response, next:NextFunction) => {
     try {
-      const rating = await MovieService.getRating(req.params.id);
+      const rating = await MovieService.getRating(req.userId!, req.params.id);
+      res.status(statusCodes.SUCCESS).json(rating);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get('/:id/average-rating',
+  verifyJWT,
+  async(req: Request, res: Response, next:NextFunction) => {
+    try {
+      const rating = await MovieService.getAverageRating(req.params.id);
       res.status(statusCodes.SUCCESS).json(rating);
     } catch (error) {
       next(error);
@@ -106,7 +118,7 @@ router.post('/:id/watched',
   verifyJWT,
   async(req: Request, res: Response, next:NextFunction) => {
     try {
-      const watched = await MovieService.createWatched(req.params.id, req.userId!);
+      const watched = await MovieService.watchedMovie(req.params.id, req.userId!);
       res.status(statusCodes.CREATED).json(watched);
     } catch (error) {
       next(error);
@@ -114,5 +126,16 @@ router.post('/:id/watched',
   },
 );
 
+router.get('/:id/watched',
+  verifyJWT,
+  async(req: Request, res: Response, next:NextFunction) => {
+    try {
+      const watched = await MovieService.getWatchedMovie(req.userId! ,req.params.id);
+      res.status(statusCodes.SUCCESS).json(watched);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 
