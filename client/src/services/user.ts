@@ -9,3 +9,13 @@ export const getLoggedUser = async () => {
     throw error;
   }
 };
+
+export const getUserById = async (id: string) => {
+  try {
+    const response = await api.get(`/users/${id}`);
+    return response;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+}
