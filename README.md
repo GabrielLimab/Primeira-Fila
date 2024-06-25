@@ -131,33 +131,7 @@ Lida com a interface de entrada, recebendo e processando as requisições do usu
 
 Segue mais uma representação da arquitetura implementada com o exemplo da entidade Movies.
 
-+-----------------+                             Front-End
-|  Controller     |                  +-----------------------------+
-|-----------------|  <-------------- |api.get('/movies/top-rated/')|
-| -  MovieService |		     +-----------------------------+
-+-----------------+
-          |
-          |
-          v
-+------------------------------------+
-|             MovieService           |
-|------------------------------------|
-| - getNowPlayingMovies()            |
-|------------------------------------|
-| - movieAPI: MovieAPI               |
-| - movieRepository: MovieRepository |
-+------------------------------------+
-          |
-          |
-  +-------+------------------+
-  |                          |
-  v                          v
-+------------------+   +--------------------------+
-|    MovieAPI      |   |      MovieRepository     |
-|------------------+   |--------------------------|
-| - getMovieDetails|   | - save(movie: Movie)     |
-+-----------------+    | - find(movieId: string)  |
-                       +--------------------------+
+![asciiDiagram](./images/ray-so-export.png)
 
 # Backlog da Sprint (nova versão)
 História #1: Como usuário, gostaria de poder criar uma conta.
