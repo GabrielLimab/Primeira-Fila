@@ -119,13 +119,13 @@ Portanto, podemos definir os adaptadores como responsáveis por pegar as requisi
 No diagrama a seguir, é possível identificar a organização de arquivos no backend na Arquitetura Hexagonal. O exemplo em questão trata da implementação das operações da entidade Movie e o consumo da API externa e as operações no banco de dados
 ![BackendDiagram](./images/backendDiagram.png)
 
-##Repository
+## Repository
 Responsável por interagir com a camada de persistência de dados, como bancos de dados, realizando operações de CRUD.
 ![Repository](./images/repository.png)
-##Service
+## Service
 Contém a lógica de negócios da aplicação, orquestrando as operações e intermediando entre os repositórios e os controladores.
 ![Service](./images/service.png)
-##Controller 
+## Controller 
 Lida com a interface de entrada, recebendo e processando as requisições do usuário e direcionando-as para os serviços apropriados.
 ![Controller](./images/controller.png)
 
