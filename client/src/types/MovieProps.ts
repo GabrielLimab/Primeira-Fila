@@ -1,5 +1,6 @@
 export type MovieProps = 
       {
+        id: number,
         overview: string,
         popularity: number,
         poster_path: string,
