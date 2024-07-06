@@ -1,5 +1,3 @@
-import { title } from "process";
-import prisma from "../../../../libs/prisma";
 import { RatingService } from "../../ratings/services/RatingService";
 import { MovieRepository } from "../repositories/MovieRepository";
 
@@ -99,8 +97,6 @@ class MovieServiceClass {
 
   async getMovieByName(movieName: string) {
     const movies = await MovieRepository.getMovieByName(movieName);
-
-    console.log(movies);
 
     movies.sort((a, b) => {
       if (a.vote_count > b.vote_count) {

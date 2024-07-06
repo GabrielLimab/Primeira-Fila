@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import prisma from "../../../../libs/prisma";
+
 class UserRepositoryClass {
   selectOptions = {
     id: true,

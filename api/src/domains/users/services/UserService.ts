@@ -1,7 +1,5 @@
-import { Prisma } from "@prisma/client";
 import { hash } from 'bcrypt';
 import { QueryError } from '../../../../errors/QueryError';
-import prisma from "../../../../libs/prisma";
 import { UserRepository } from "../repositories/UserRepository";
 
 class UserServiceClass {
@@ -19,7 +17,6 @@ class UserServiceClass {
     }
     
     const encryptedPassword = await this.encryptPassword(body.password);
-
     const newUser = await UserRepository.createUser({...body, password: encryptedPassword});
     return newUser;
   }
@@ -45,7 +42,7 @@ class UserServiceClass {
   }
 
   async edit(id: string, body: { name?: string; email?: string; password?: string;}) {
-    const user = this.getById(id);
+    const user = await this.getById(id);
 
     if (!user) {
       throw new QueryError('User not found');
