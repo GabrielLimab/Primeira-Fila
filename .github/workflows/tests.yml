@@ -29,3 +29,4 @@ jobs:
           cd api
           npm ci
           npm test
+          npm run coverage

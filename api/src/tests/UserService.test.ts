@@ -1,6 +1,7 @@
 import { Prisma, User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { UserRepository } from '../domains/users/repositories/UserRepository';
 import { UserService } from '../domains/users/services/UserService';
 import prisma from '../libs/__mocks__/prisma';
 
@@ -8,6 +9,31 @@ vi.mock('../libs/prisma');
 vi.mock('bcrypt', () => ({
   hash: vi.fn((password: string, saltRounds: number) => 'encryptedPassword'),
 }));
+vi.mock('@prisma/client', () => {
+  return {
+    PrismaClient: vi.fn().mockImplementation(() => ({
+      user: {
+        findFirst: vi.fn(),
+        create: vi.fn(),
+        findMany: vi.fn(),
+      },
+    })),
+  };
+});
+
+vi.mock('../domains/users/repositories/UserRepository', () => {
+  return {
+    UserRepository: {
+      getUserByEmail: vi.fn(),
+      createUser: vi.fn(),
+      getAllUsers: vi.fn(),
+      getUserById: vi.fn(),
+      editUser: vi.fn(),
+    },
+  };
+});
+
+// const prisma = new PrismaClient();
 
 const selectOptions = {
   id: true,
@@ -30,33 +56,21 @@ describe('create', () => {
     }
   });
 
-  test('should call findFirst with email and username', async () => {
-    await UserService.create(createBody);
-    
-    expect(prisma.user.findFirst).toHaveBeenNthCalledWith(1, {
-      where: {
-        email: createBody.email,
-      },
-    });
+  test('should call getUserByEmail with email', async () => {
+    const createBody = { email: 'test@test.com', password: 'password123', name: 'test' };
 
-    expect(prisma.user.findFirst).toHaveBeenNthCalledWith(2, {
-      where: {
-        name: createBody.name,
-      },
-    });
+    (UserRepository.getUserByEmail as any).mockResolvedValue(null); // Mockando para retornar null, indicando que o usuário não existe
+
+    await UserService.create(createBody);
+
+    expect(UserRepository.getUserByEmail).toHaveBeenNthCalledWith(1, createBody.email);
   });
 
-  test('should throw error if email already exists', async () => {
-    prisma.user.findFirst.mockResolvedValueOnce({...createBody, id: '1', created_at: new Date('01-01-2023')});
+  test('should throw an error if user already exists', async () => {
+
+    (UserRepository.getUserByEmail as any).mockResolvedValue({ email: 'test@test.com' });
 
     await expect(UserService.create(createBody)).rejects.toThrow('Email already in use');
-  });
-
-  test('should throw error if username already exists', async () => {
-    prisma.user.findFirst.mockResolvedValueOnce(null);
-    prisma.user.findFirst.mockResolvedValueOnce({...createBody, id: '1', created_at: new Date('01-01-2023')});
-
-    await expect(UserService.create(createBody)).rejects.toThrow('Username already in use');
   });
 
   test('should call encryptPassword', async () => {
@@ -74,17 +88,9 @@ describe('create', () => {
 
     await UserService.create(createBody);
 
-    expect(prisma.user.create).toHaveBeenCalledWith({
-      data: {
-        ...createBody,
-        password: 'encryptedPassword',
-        picture: {
-          create: {
-            picture_url: 'default.png',
-            profile_picture: true,
-          },
-        }
-      },
+    expect(UserRepository.createUser).toHaveBeenCalledWith({
+      ...createBody,
+      password: 'encryptedPassword',
     });
   });
 
@@ -107,24 +113,17 @@ describe('getAll', () => {
     ];
   });
 
-  test('should call findMany with select', async () => {
-    prisma.user.findMany.mockResolvedValueOnce(findManyUsers);
-    
-    await UserService.getAll();
-
-    expect(prisma.user.findMany).toHaveBeenCalledWith({ select: selectOptions });
-  });
-
   test('should return users', async () => {
-    prisma.user.findMany.mockResolvedValueOnce(findManyUsers);
+    (UserRepository.getAllUsers as any).mockResolvedValueOnce(findManyUsers);
 
     const users = await UserService.getAll();
 
+    expect(users.length).toEqual(1);
     expect(users).toEqual(findManyUsers);
   });
 
   test('should throw error if no users found', async () => {
-    prisma.user.findMany.mockResolvedValueOnce([]);
+    (UserRepository.getAllUsers as any).mockResolvedValueOnce([]);
 
     await expect(UserService.getAll()).rejects.toThrow('No users found');
   });
@@ -146,20 +145,15 @@ describe('getById', () => {
   });
 
   test('should call findFirst with id and select', async () => {
-    prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+    (UserRepository.getUserById as any).mockResolvedValueOnce(findFirstUser);
     
     await UserService.getById('1');
 
-    expect(prisma.user.findFirst).toHaveBeenCalledWith({
-      where: {
-        id: '1',
-      },
-      select: selectOptions,
-    });
+    expect(UserRepository.getUserById).toHaveBeenCalledWith('1');
   });
 
   test('should return user', async () => {
-    prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+    (UserRepository.getUserById as any).mockResolvedValueOnce(findFirstUser);
 
     const user = await UserService.getById('1');
 
@@ -167,7 +161,7 @@ describe('getById', () => {
   });
 
   test('should throw error if user not found', async () => {
-    prisma.user.findFirst.mockResolvedValueOnce(null);
+    (UserRepository.getUserById as any).mockResolvedValueOnce(null);
 
     await expect(UserService.getById('1')).rejects.toThrow('User not found');
   });
@@ -200,75 +194,41 @@ describe('edit', () => {
     };
   });
 
-  test('should call findFirst with id', async () => {
-    prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
-    
-    await UserService.edit('1', editBody);
-
-    expect(prisma.user.findFirst).toHaveBeenCalledWith({
-      where: {
-        id: '1',
-      },
-    });
-  });
-
   test('should throw error if user not found', async () => {
-    prisma.user.findFirst.mockResolvedValueOnce(null);
+    const userId = '1';
+    const editBody = { name: 'new name' };
 
-    await expect(UserService.edit('1', editBody)).rejects.toThrow('User not found');
+    vi.spyOn(UserService, 'getById').mockResolvedValueOnce(null);
+
+    await expect(UserService.edit(userId, editBody)).rejects.toThrow('User not found');
   });
 
-  test('should call findFirst with email and username', async () => {
-    prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
-    
-    await UserService.edit('1', editBody);
+  test('should throw error if email already in use', async () => {
+    const userId = '1';
+    const editBody = { email: 'newemail@test.com' };
 
-    expect(prisma.user.findFirst).toHaveBeenNthCalledWith(2, {
-      where: {
-        email: editBody.email,
-      },
-    });
+    const user = { id: userId, name: 'test', email: 'test@test.com', password: 'test' };
+    const conflictingUser = { id: '2', name: 'conflict', email: 'newemail@test.com', password: 'conflict' };
+
+    vi.spyOn(UserService, 'getById').mockResolvedValueOnce(user);
+    (UserRepository.getUserByEmail as any).mockResolvedValueOnce(conflictingUser);
+
+    await expect(UserService.edit(userId, editBody)).rejects.toThrow('Email already in use');
   });
 
-  test('should throw error if email already exists', async () => {
-    prisma.user.findFirst.mockResolvedValue(findFirstUser);
+  test('should call editUser with encrypted password if password is provided', async () => {
+    const userId = '1';
+    const editBody = { password: 'newpassword' };
 
-    await expect(UserService.edit('2', editBody)).rejects.toThrow('Email already in use');
-  });
+    const user = { id: userId, name: 'test', email: 'test@test.com', password: 'test' };
+    vi.spyOn(UserService, 'getById').mockResolvedValueOnce(user);
+    vi.spyOn(UserService, 'encryptPassword').mockResolvedValueOnce('encrypted-newpassword');
+    (UserRepository.editUser as any).mockResolvedValueOnce({ ...user, ...editBody, password: 'encrypted-newpassword' });
 
-  test('should throw error if username already exists', async () => {
-    prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
-    prisma.user.findFirst.mockResolvedValueOnce(null);
-    prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
+    const result = await UserService.edit(userId, editBody);
 
-    await expect(UserService.edit('2', editBody)).rejects.toThrow('Username already in use');
-  });
-
-  test('should call encryptPassword', async () => {
-    prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
-    prisma.user.findFirst.mockResolvedValueOnce(null);
-    prisma.user.findFirst.mockResolvedValueOnce(null);
-
-    await UserService.edit('2', editBody);
-    expect(bcrypt.hash).toHaveBeenCalledWith('test', 10);
-  });
-
-  test('should call update with encrypted password', async () => {
-    prisma.user.findFirst.mockResolvedValueOnce(findFirstUser);
-    prisma.user.findFirst.mockResolvedValueOnce(null);
-    prisma.user.findFirst.mockResolvedValueOnce(null);
-
-    await UserService.edit('2', editBody);
-
-    expect(prisma.user.update).toHaveBeenCalledWith({
-      where: {
-        id: '2',
-      },
-      data: {
-        ...editBody,
-        password: 'encryptedPassword',
-      },
-    });
+    expect(UserRepository.editUser).toHaveBeenCalledWith(userId, { password: 'encrypted-newpassword' });
+    expect(result).toEqual({ ...user, ...editBody, password: 'encrypted-newpassword' });
   });
 
 

@@ -27,17 +27,7 @@ class RatingServiceClass {
     }
 
     const createdRating = await prisma.rating.create({
-      data: {
-        rating: rating,
-        movieId: movieId,
-        user: {
-          connect: {
-            id: userId
-          }
-        },
-        watched: watched,
-        review: review
-      }
+      data: { rating: rating, movieId: movieId, user: { connect: { id: userId }}, watched: watched, review: review }
     });
 
     return createdRating;
@@ -152,7 +142,6 @@ class RatingServiceClass {
   }
 
   async getRatingByUser(userId: string) {
-    console.log("ENTROUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUu")
     const ratings = await prisma.rating.findMany({
       where: {
         userId: userId,
