@@ -40,6 +40,7 @@ function SignUp({ setAuthMode }: SignUpProps) {
             throw err;
           })
           .then(() => {
+            localStorage.setItem("token", "success");
             navigate("/");
           });
       });

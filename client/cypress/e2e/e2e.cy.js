@@ -8,7 +8,7 @@ const password = 'test123';
 describe('Sign Up', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5173/');
-    cy.wait(2000);
+    cy.wait(1000);
     cy.clearAllCookies();
   });
 
@@ -27,14 +27,14 @@ describe('Sign Up', () => {
     cy.get('.text-input-container').eq(1).type(uniqueEmail);
     cy.get('.text-input-container').eq(2).type(password);
     cy.get('.submit-button').click();
-    cy.url().should('eq', 'http://localhost:5173/'); 
+    cy.url().should('eq', 'http://localhost:5173/');
   });
 });
 
 describe('Login', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5173/');
-    cy.wait(2000);
+    cy.wait(1000);
     cy.clearAllCookies();
   });
 
@@ -59,7 +59,7 @@ describe('Login', () => {
 describe('Home Page', () => {
   beforeEach(() => {
     cy.clearAllCookies();
-    cy.wait(2000);
+    cy.wait(1000);
     cy.visit('http://localhost:5173/');
   });
 
