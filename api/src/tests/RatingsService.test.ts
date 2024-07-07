@@ -1,15 +1,15 @@
-import { PrismaClient } from '@prisma/client';
-import axios from 'axios';
-import { beforeEach, describe, expect, test, vi } from 'vitest';
-import { RatingService } from '../domains/ratings/services/RatingService'; // ajuste o caminho conforme necessário
+import { PrismaClient } from "@prisma/client";
+import axios from "axios";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import { RatingService } from "../domains/ratings/services/RatingService"; // ajuste o caminho conforme necessário
 
-vi.mock('axios');
+vi.mock("axios");
 
 const prisma = new PrismaClient();
 const api = axios.create();
 
-vi.mock('../libs/prisma');
-vi.mock('@prisma/client', () => {
+vi.mock("../libs/prisma");
+vi.mock("@prisma/client", () => {
   const mPrismaClient = {
     rating: {
       findFirst: vi.fn(),
@@ -24,26 +24,39 @@ vi.mock('@prisma/client', () => {
   return { PrismaClient: vi.fn(() => mPrismaClient) };
 });
 
-describe('RatingsService', () => {
+describe("RatingsService", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  describe('createRating', () => {
-    test('should update rating if existentRating is found', async () => {
+  describe("createRating", () => {
+    test("should update rating if existentRating is found", async () => {
       const movieId = 1;
-      const userId = '1';
+      const userId = "1";
       const rating = 5;
       const watched = true;
-      const review = 'Great movie';
+      const review = "Great movie";
 
-      const existentRating = { id: 1, rating: 4, movieId, userId, watched: false, review: 'Old review' };
+      const existentRating = {
+        id: 1,
+        rating: 4,
+        movieId,
+        userId,
+        watched: false,
+        review: "Old review",
+      };
       const updatedRating = { ...existentRating, rating, watched, review };
 
       prisma.rating.findFirst.mockResolvedValue(existentRating);
       prisma.rating.update.mockResolvedValue(updatedRating);
 
-      const result = await RatingService.createRating(movieId, userId, rating, watched, review);
+      const result = await RatingService.createRating(
+        movieId,
+        userId,
+        rating,
+        watched,
+        review
+      );
 
       expect(prisma.rating.findFirst).toHaveBeenCalledWith({
         where: { movieId, userId },
@@ -54,14 +67,13 @@ describe('RatingsService', () => {
       });
       expect(result).toEqual(existentRating);
     });
-  
 
-    test('should call findFirst and update when an existent rating is found', async () => {
-      const userId = '1';
+    test("should call findFirst and update when an existent rating is found", async () => {
+      const userId = "1";
       const movieId = 1;
       const rating = 5;
       const watched = true;
-      const review = 'test';
+      const review = "test";
 
       const existentRating = {
         id: 1,
@@ -69,7 +81,7 @@ describe('RatingsService', () => {
         movieId,
         userId,
         watched: false,
-        review: 'old review',
+        review: "old review",
       };
 
       // Configure mocks
@@ -81,7 +93,13 @@ describe('RatingsService', () => {
         review,
       });
 
-      await RatingService.createRating(movieId, userId, rating, watched, review);
+      await RatingService.createRating(
+        movieId,
+        userId,
+        rating,
+        watched,
+        review
+      );
 
       expect(prisma.rating.findFirst).toHaveBeenCalledWith({
         where: {
@@ -103,9 +121,9 @@ describe('RatingsService', () => {
     });
   });
 
-  describe('getRating', () => {
-    test('should return the rating when a rating is found', async () => {
-      const userId = '1';
+  describe("getRating", () => {
+    test("should return the rating when a rating is found", async () => {
+      const userId = "1";
       const movieId = 1;
       const expectedRating = 5;
 
@@ -128,8 +146,8 @@ describe('RatingsService', () => {
       expect(result).toBe(expectedRating);
     });
 
-    test('should return -1 when no rating is found', async () => {
-      const userId = '1';
+    test("should return -1 when no rating is found", async () => {
+      const userId = "1";
       const movieId = 1;
 
       // Configure mocks
@@ -147,8 +165,8 @@ describe('RatingsService', () => {
       expect(result).toBe(-1);
     });
 
-    test('should return -1 when the rating found has null rating', async () => {
-      const userId = '1';
+    test("should return -1 when the rating found has null rating", async () => {
+      const userId = "1";
       const movieId = 1;
 
       // Configure mocks
@@ -171,15 +189,15 @@ describe('RatingsService', () => {
     });
   });
 
-  describe('getUserTopRatedMovie', () => {
-    test('should return the top-rated movie for the user', async () => {
-      const userId = '1';
+  describe("getUserTopRatedMovie", () => {
+    test("should return the top-rated movie for the user", async () => {
+      const userId = "1";
       const expectedTopRating = {
         movieId: 1,
         userId: userId,
         rating: 5,
         watched: true,
-        review: 'Great movie!',
+        review: "Great movie!",
       };
 
       (prisma.rating.findFirst as any).mockResolvedValue(expectedTopRating);
@@ -194,7 +212,7 @@ describe('RatingsService', () => {
           },
         },
         orderBy: {
-          rating: 'desc',
+          rating: "desc",
         },
       });
 
@@ -202,22 +220,22 @@ describe('RatingsService', () => {
     });
   });
 
-  describe('getReviews', () => {
-    test('should return reviews for the specified movie', async () => {
+  describe("getReviews", () => {
+    test("should return reviews for the specified movie", async () => {
       const movieId = 1;
       const expectedReviews = [
         {
-          review: 'Great movie!',
+          review: "Great movie!",
           rating: 5,
           user: {
-            name: 'User One',
+            name: "User One",
           },
         },
         {
-          review: 'Not bad',
+          review: "Not bad",
           rating: 3,
           user: {
-            name: 'User Two',
+            name: "User Two",
           },
         },
       ];
@@ -247,7 +265,7 @@ describe('RatingsService', () => {
       expect(result).toEqual(expectedReviews);
     });
 
-    test('should return an empty array when no reviews are found', async () => {
+    test("should return an empty array when no reviews are found", async () => {
       const movieId = 1;
 
       (prisma.rating.findMany as any).mockResolvedValue([]);
@@ -276,10 +294,10 @@ describe('RatingsService', () => {
     });
   });
 
-  describe('getWatchedMovie', () => {
-    test('should return false if no rating is found for the movie and user', async () => {
+  describe("getWatchedMovie", () => {
+    test("should return false if no rating is found for the movie and user", async () => {
       const movieId = 1;
-      const userId = '1';
+      const userId = "1";
 
       (prisma.rating.findFirst as any).mockResolvedValue(null);
 
@@ -295,9 +313,9 @@ describe('RatingsService', () => {
       expect(result).toBe(false);
     });
 
-    test('should return the watched status if rating is found for the movie and user', async () => {
+    test("should return the watched status if rating is found for the movie and user", async () => {
       const movieId = 1;
-      const userId = '1';
+      const userId = "1";
       const expectedWatched = true;
 
       (prisma.rating.findFirst as any).mockResolvedValue({
@@ -318,9 +336,9 @@ describe('RatingsService', () => {
       expect(result).toBe(expectedWatched);
     });
 
-    test('should return the watched status if rating is found for the movie and user but watched is false', async () => {
+    test("should return the watched status if rating is found for the movie and user but watched is false", async () => {
       const movieId = 1;
-      const userId = '1';
+      const userId = "1";
       const expectedWatched = false;
 
       (prisma.rating.findFirst as any).mockResolvedValue({
@@ -342,23 +360,23 @@ describe('RatingsService', () => {
     });
   });
 
-  describe('getRatingByUser', () => {
-    test('should return ratings for the specified user', async () => {
-      const userId = '1';
+  describe("getRatingByUser", () => {
+    test("should return ratings for the specified user", async () => {
+      const userId = "1";
       const expectedRatings = [
         {
           movieId: 1,
           userId: userId,
           rating: 5,
           watched: true,
-          review: 'Great movie!',
+          review: "Great movie!",
         },
         {
           movieId: 2,
           userId: userId,
           rating: 4,
           watched: true,
-          review: 'Good movie!',
+          review: "Good movie!",
         },
       ];
 
@@ -378,8 +396,8 @@ describe('RatingsService', () => {
       expect(result).toEqual(expectedRatings);
     });
 
-    test('should return an empty array when no ratings are found for the specified user', async () => {
-      const userId = '1';
+    test("should return an empty array when no ratings are found for the specified user", async () => {
+      const userId = "1";
 
       (prisma.rating.findMany as any).mockResolvedValue([]);
 
@@ -393,8 +411,6 @@ describe('RatingsService', () => {
           },
         },
       });
-
     });
   });
-
-})
+});
