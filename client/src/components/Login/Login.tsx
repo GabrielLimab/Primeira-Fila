@@ -63,7 +63,9 @@ function Login({ setAuthMode }: LoginProps) {
           </div>
           <a href="/">Esqueci minha senha</a>
         </div>
-        <Button text="CONTINUAR" darkMode></Button>
+        <div className="submit-button">
+          <Button text="CONTINUAR" darkMode></Button>
+        </div>
       </form>
       <div className="text-divider">
         <strong>OU</strong>
@@ -72,6 +74,7 @@ function Login({ setAuthMode }: LoginProps) {
       <p className="go-to-signup">
         Novo Usuário?{" "}
         <Link
+          className="signup-link"
           to="#"
           onClick={() => {
             setAuthMode("signup");

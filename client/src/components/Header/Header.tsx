@@ -93,7 +93,7 @@ const Header = () => {
             </StyledLink>
           </RightButtons>
           <RightButtons>
-            <StyledLink to="/auth" onClick={handleLogout} className="ok">
+            <StyledLink to="/auth" onClick={handleLogout} className="logout">
               <RightButtonsText>Sair</RightButtonsText>
             </StyledLink>
           </RightButtons>
