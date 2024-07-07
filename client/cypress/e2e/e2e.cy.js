@@ -5,9 +5,6 @@ const uniqueName = `testuser${timestamp}`;
 const uniqueEmail = `testuser${timestamp}@test.com`;
 const password = 'test123';
 
-const userEmail = 'a@a.com';
-const userPassword = 'a';
-
 describe('Sign Up', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5173/');
@@ -71,22 +68,22 @@ describe('Home Page', () => {
   });
 
   it('should login and display home page', () => {
-    cy.get('.text-input-container').eq(0).type(userEmail);
-    cy.get('.text-input-container').eq(1).type(userPassword);
+    cy.get('.text-input-container').eq(0).type(uniqueEmail);
+    cy.get('.text-input-container').eq(1).type(password);
     cy.get('.submit-button').click();
     cy.url().should('eq', 'http://localhost:5173/');
   });
 
   it('should display 3 movie card sections', () => {
-    cy.get('.text-input-container').eq(0).type(userEmail);
-    cy.get('.text-input-container').eq(1).type(userPassword);
+    cy.get('.text-input-container').eq(0).type(uniqueEmail);
+    cy.get('.text-input-container').eq(1).type(password);
     cy.get('.submit-button').click();
     cy.get('.card-section-container').should('have.length', 3);
   });
 
   it('should display top rated movie card section', () => {
-    cy.get('.text-input-container').eq(0).type(userEmail);
-    cy.get('.text-input-container').eq(1).type(userPassword);
+    cy.get('.text-input-container').eq(0).type(uniqueEmail);
+    cy.get('.text-input-container').eq(1).type(password);
     cy.get('.submit-button').click();
     cy.get('.card-section-container').eq(1).contains('Melhores filmes').should('exist');
     cy.get('.card').should('exist');
