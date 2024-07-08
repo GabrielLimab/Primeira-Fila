@@ -344,7 +344,7 @@ function Movie() {
             )}
           </div>
           <div className="review-button">
-            <button onClick={() => handleReviewClick()}>
+            <button className='add-review' onClick={() => handleReviewClick()}>
               <p>Review</p>
               <img src={add}></img>
             </button>
@@ -353,7 +353,7 @@ function Movie() {
         {showReviewInput && (
           <div className="review-input">
             <textarea
-              id="input-review"
+              className="input-review"
               placeholder="Write your review here"
             ></textarea>
             <div className="submit-review">

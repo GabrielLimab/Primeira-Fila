@@ -146,8 +146,8 @@ describe('Movie Page', () => {
   });
 
   it('should be able to create a review', () => {
-    cy.get('.review-button button').click();
-    cy.get('#input-review').type('Test review');
+    cy.get('.add-review').click();
+    cy.get('.input-review').type('Test review');
     cy.get('.submit-review').click();
     cy.get('.reviews-container').contains('Resenhas dos usuários').should('exist');
   });
