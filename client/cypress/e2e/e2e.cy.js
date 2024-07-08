@@ -89,3 +89,65 @@ describe('Home Page', () => {
     cy.get('.card').should('exist');
   });
 });
+
+describe('Movie Page', () => {
+  beforeEach(() => {
+    cy.clearAllCookies();
+    cy.wait(1000);
+    cy.visit('http://localhost:5173/');
+    cy.login("lima@gmail.com", "123Seguro&");
+    cy.visit('http://localhost:5173/movies/704673');
+  });
+
+  it('should display buttons watched, rate and rating', () => {
+    cy.get('.watched').should('exist');
+    cy.get('.rate').should('exist');
+    cy.get('.rating').should('exist');
+  });
+
+  it('should change image when watched button is clicked', () => {
+    cy.get('.watched').click();
+    cy.get('.watched img')
+    .should('have.attr', 'src')
+    .then((src) => {
+      expect(src).to.include('check-box');
+    });
+
+    cy.get('.watched').click();
+    cy.get('.watched img')
+    .should('have.attr', 'src')
+    .then((src) => {
+      expect(src).to.include('checked-box');
+    });
+  });
+
+  it('should rate movie', () => {
+    cy.get('.rate').click();
+    cy.get('.rating-buttons').should('exist');
+    cy.get('.rating-button').eq(10).click();
+    cy.get('.rate').contains('10').should('exist');
+    cy.get('.rate img')
+    .should('have.attr', 'src')
+    .then((src) => {
+      expect(src).to.include('yellow-star');
+    });
+  });
+
+  it('should display movie info', () => {
+    cy.get('.movie-backdrop').should('exist');
+    cy.get('.movie-banner').should('exist');
+    cy.get('.genre').should('exist');
+    cy.get('.plot').should('exist');
+    cy.get('.director').should('exist');
+    cy.get('.writers').should('exist');
+    cy.get('.stars').should('exist');
+    cy.get('.awards').should('exist');
+  });
+
+  it('should be able to create a review', () => {
+    cy.get('.review-button button').click();
+    cy.get('#input-review').type('Test review');
+    cy.get('.submit-review').click();
+    cy.get('.reviews-container').contains('Resenhas dos usuários').should('exist');
+  });
+})

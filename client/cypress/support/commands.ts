@@ -35,3 +35,11 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add('login', (username, password) => {
+    cy.visit('http://localhost:5173/');
+  
+    cy.get('.text-input-container').eq(0).type(username);
+    cy.get('.text-input-container').eq(1).type(password);
+    cy.get('.submit-button').click();
+})
