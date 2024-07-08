@@ -97,6 +97,7 @@ describe('Movie Page', () => {
     cy.visit('http://localhost:5173/');
     cy.login("lima@gmail.com", "123Seguro&");
     cy.visit('http://localhost:5173/movies/704673');
+    cy.wait(1000);
   });
 
   it('should display buttons watched, rate and rating', () => {
