@@ -353,6 +353,7 @@ function Movie() {
         {showReviewInput && (
           <div className="review-input">
             <textarea
+              id="input-review"
               className="input-review"
               placeholder="Write your review here"
             ></textarea>
