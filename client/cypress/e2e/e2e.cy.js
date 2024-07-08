@@ -110,14 +110,14 @@ describe('Movie Page', () => {
     cy.get('.watched img')
     .should('have.attr', 'src')
     .then((src) => {
-      expect(src).to.include('check-box');
+      expect(src).to.include('checked-box');
     });
 
     cy.get('.watched').click();
     cy.get('.watched img')
     .should('have.attr', 'src')
     .then((src) => {
-      expect(src).to.include('checked-box');
+      expect(src).to.include('check-box');
     });
   });
 
