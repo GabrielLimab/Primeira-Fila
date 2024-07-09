@@ -195,15 +195,15 @@ describe('Search', () => {
   });
 
   it('should click on searchInput and write Game of Thrones', () => {
-    cy.get('search-input')
+    cy.get('[data-testid="search-input"]')
     .click()
     .type('Game of Thrones');
 
-    cy.get('search-input').should('have.value', 'Game of Thrones');
+    cy.get('[data-testid="search-input"]').should('have.value', 'Game of Thrones');
   });
 
   it('should press enter and go to search page', () => {
-    cy.get('search-input')
+    cy.get('[data-testid="search-input"]')
     .click()
     .type('Game of Thrones{enter}');
 
@@ -211,7 +211,7 @@ describe('Search', () => {
   });
 
   it('should display search results', () => {
-    cy.get('search-input')
+    cy.get('[data-testid="search-input"]')
     .click()
     .type('Game of Thrones{enter}');
 
