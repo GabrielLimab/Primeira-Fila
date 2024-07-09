@@ -157,7 +157,7 @@ describe('Movie Page', () => {
     // Verify that the reviews container is displayed and contains the review text
     cy.get('.reviews-container')
       .should('be.visible')
-      .and('contain', 'This is my review');
+      .and('contain', 'This is my review')
   });
 })
 
