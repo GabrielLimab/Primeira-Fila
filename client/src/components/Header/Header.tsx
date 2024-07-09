@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import search from "../../assets/search-icon.png";
 import user from "../../assets/user.png";
 import vector from "../../assets/vector.png";
 import GlobalStyle from "../Styles/Font";
-import { useNavigate } from "react-router-dom";
 
+import { ChangeEvent, FormEvent, useState } from "react";
+import { logout } from "../../services/authenticate";
+import { useSearch } from "../Ranking/SearchContext";
 import {
   HeaderContainer,
   HeaderContent,
@@ -19,9 +22,6 @@ import {
   UserIcon,
   VectorIcon,
 } from "./Header.style";
-import { useSearch } from "../Ranking/SearchContext";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { logout } from "../../services/authenticate";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -64,6 +64,7 @@ const Header = () => {
         <form onSubmit={handleSearchSubmit}>
           <SearchBar>
             <SearchInput
+              className="search-input"
               type="text"
               placeholder="Buscar Primeira Fila"
               onChange={handleSearchChange}
