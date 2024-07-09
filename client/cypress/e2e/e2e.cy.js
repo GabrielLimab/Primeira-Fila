@@ -160,3 +160,66 @@ describe('Movie Page', () => {
       .and('contain', 'This is my review');
   });
 })
+
+describe('Profile Page', () => {
+  beforeEach(() => {
+    cy.clearAllCookies();
+    cy.wait(1000);
+    cy.visit('http://localhost:5173/');
+    cy.login("lima@gmail.com", "123Seguro&")
+    cy.visit('http://localhost:5173/user');
+    cy.wait(1000);
+  });
+
+  it('should display user info', () => {
+    cy.contains('Gêneros favoritos').should('be.visible');
+    cy.contains('Número de resenhas').should('be.visible');
+    cy.contains('Filmes assistidos').should('be.visible');
+    cy.contains('Séries assistidas').should('be.visible');
+  });
+
+  it('should display user reviews', () => {
+    cy.contains('Resenhas').should('be.visible');
+    cy.contains('Ver todas').should('be.visible');
+  });
+});
+
+describe('Search', () => {
+  beforeEach(() => {
+    cy.clearAllCookies();
+    cy.wait(1000);
+    cy.visit('http://localhost:5173/');
+    cy.login("lima@gmail.com", "123Seguro&")
+    cy.visit('http://localhost:5173/');
+    cy.wait(1000);
+  });
+
+  it('should click on searchInput and write Game of Thrones', () => {
+    cy.get('input')
+    .click()
+    .type('Game of Thrones');
+
+    cy.get('input').should('have.value', 'Game of Thrones');
+  });
+
+  it('should press enter and go to search page', () => {
+    cy.get('input')
+    .click()
+    .type('Game of Thrones{enter}');
+
+    cy.url().should('include', '/search');
+  });
+
+  it('should display search results', () => {
+    cy.get('input')
+    .click()
+    .type('Game of Thrones{enter}');
+
+    cy.contains('Busca por Game of Thrones').should('be.visible');
+    cy.contains('Filmes').should('be.visible');
+    cy.contains('Compartilhar').should('be.visible');
+  });
+
+
+
+});
