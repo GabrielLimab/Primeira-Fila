@@ -67,7 +67,9 @@ export const CategorySelect = styled.select`
   }
 `;
 
-export const SearchInput = styled.input`
+export const SearchInput = styled.input.attrs({
+  'data-testid': 'search-input'
+})`
   flex: 1;
   background-color: #1b1b1b;
   color: #797979;
