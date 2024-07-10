@@ -9,6 +9,7 @@ import "./Login.css";
 interface LoginProps {
   setAuthMode: React.Dispatch<React.SetStateAction<string>>;
 }
+
 function Login({ setAuthMode }: LoginProps) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
